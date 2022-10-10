@@ -18,6 +18,7 @@ function App() {
             <Navbar />
             <div>
               <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/borrowing-manager" element={<Home />} />

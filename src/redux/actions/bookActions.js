@@ -3,6 +3,9 @@ import {
   FETCH_BOOKS_REQUEST,
   FETCH_BOOKS_SUCCESS,
   FETCH_BOOKS_ERROR,
+  POST_BOOKS_REQUEST,
+  POST_BOOKS_SUCCESS,
+  POST_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 export const loadBooks = () => async (dispatch) => {
@@ -21,9 +24,22 @@ export const loadBooks = () => async (dispatch) => {
       payload: error,
     });
   }
+};
 
-  // const response = await axios.get("http://localhost:3001/api/books");
-  // dispatch({
-  //   type:
-  // })
+export const addBooks = (payload) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_BOOKS_REQUEST });
+    const url = "http://localhost:3001/api/books/" + payload.ISBN;
+    await axios.post(url);
+    dispatch({
+      type: POST_BOOKS_SUCCESS,
+      payload: payload,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: POST_BOOKS_ERROR,
+      payload: error,
+    });
+  }
 };

@@ -9,6 +9,9 @@ import {
   DELETE_BOOKS_REQUEST,
   DELETE_BOOKS_SUCCESS,
   DELETE_BOOKS_ERROR,
+  FETCH_EDIT_BOOKS_REQUEST,
+  FETCH_EDIT_BOOKS_SUCCESS,
+  FETCH_EDIT_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 export const loadBooks = () => async (dispatch) => {
@@ -63,6 +66,25 @@ export const deleteBooks = (payloadId, payloadData) => async (dispatch) => {
     console.log(error);
     dispatch({
       type: DELETE_BOOKS_ERROR,
+      payload: error,
+    });
+  }
+};
+
+export const loadEditBooks = (payload, van) => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_EDIT_BOOKS_REQUEST });
+    const url = "http://localhost:3001/api/books/" + payload;
+    const response = await axios.get(url);
+    van(response);
+    // dispatch({
+    //   type: FETCH_EDIT_BOOKS_SUCCESS,
+    //   payload: response.data,
+    // });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: FETCH_EDIT_BOOKS_ERROR,
       payload: error,
     });
   }

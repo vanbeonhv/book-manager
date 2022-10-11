@@ -8,6 +8,9 @@ import {
   DELETE_BOOKS_REQUEST,
   DELETE_BOOKS_SUCCESS,
   DELETE_BOOKS_ERROR,
+  FETCH_EDIT_BOOKS_REQUEST,
+  FETCH_EDIT_BOOKS_SUCCESS,
+  FETCH_EDIT_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 const initialState = {
@@ -20,11 +23,13 @@ const initialState = {
 const bookReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_BOOKS_REQUEST:
+      console.log("1");
       return {
         ...state,
         requesting: true,
       };
     case FETCH_BOOKS_SUCCESS:
+      console.log("2");
       return {
         ...state,
         requesting: false,
@@ -39,11 +44,13 @@ const bookReducer = (state = initialState, action) => {
         message: action.payload,
       };
     case POST_BOOKS_REQUEST:
+      console.log("3");
       return {
         ...state,
         requesting: true,
       };
     case POST_BOOKS_SUCCESS:
+      console.log("4");
       return {
         ...state,
         requesting: false,
@@ -57,11 +64,13 @@ const bookReducer = (state = initialState, action) => {
         message: action.payload,
       };
     case DELETE_BOOKS_REQUEST:
+      console.log("5");
       return {
         ...state,
         requesting: true,
       };
     case DELETE_BOOKS_SUCCESS:
+      console.log("6");
       console.log(action.payload);
       action.payload.payloadData = action.payload.payloadData.filter(
         (book) => book.id !== action.payload.payloadId
@@ -73,6 +82,27 @@ const bookReducer = (state = initialState, action) => {
         data: action.payload.payloadData,
       };
     case DELETE_BOOKS_ERROR:
+      return {
+        ...state,
+        requesting: false,
+        success: false,
+        message: action.payload,
+      };
+    case FETCH_EDIT_BOOKS_REQUEST:
+      console.log("7");
+      return {
+        ...state,
+        requesting: true,
+      };
+    case FETCH_EDIT_BOOKS_SUCCESS:
+      console.log("8");
+      return {
+        ...state,
+        requesting: false,
+        success: true,
+        data: action.payload,
+      };
+    case FETCH_EDIT_BOOKS_ERROR:
       return {
         ...state,
         requesting: false,

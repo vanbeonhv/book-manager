@@ -10,10 +10,7 @@ const Navbar = () => {
         <button className="btn text-primary px-12 fs-6">
           <AiOutlineMenu />
         </button>
-        <div
-          className="d-flex align-items-center gap-5"
-          onClick={console.log("test")}
-        >
+        <div className="d-flex align-items-center gap-5">
           <img src={avatar} alt="avatar" className="rounded-circle h-32 w-32" />
           <p className="mb-0">
             Hi, <span className="fw-semibold">Selena</span>

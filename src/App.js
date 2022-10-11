@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import "typeface-roboto";
 import Navbar from "./components/Navbar";
 import AddBooks from "./pages/AddBooks";
+import Test from "./pages/Test";
+import EditBooks from "./pages/EditBooks";
 
 function App() {
   return (
@@ -23,9 +25,10 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/add" element={<AddBooks />} />
+                <Route path="/books/edit/:id" element={<EditBooks />} />
                 <Route path="/borrowing-manager" element={<Home />} />
                 <Route path="/returning-manager" element={<Home />} />
-                <Route path="/report" element={<Home />} />
+                <Route path="/report" element={<Test />} />
               </Routes>
             </div>
           </div>

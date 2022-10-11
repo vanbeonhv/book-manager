@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { loadBooks } from "../redux/actions/bookActions";
+import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
 
 const Books = () => {
@@ -17,7 +17,10 @@ const Books = () => {
     navigate("/books/add");
   };
   const handleEdit = (id) => {
-    console.log(id);
+    navigate("/books/edit/" + id);
+  };
+  const handleDelete = (id, data) => {
+    dispatch(deleteBooks(id, data));
   };
 
   return (
@@ -51,25 +54,29 @@ const Books = () => {
             </tr>
           ) : data && data.length ? (
             data.map((book) => (
-              <tr key={book.ISBN}>
+              <tr key={book.id}>
                 <td>
-                  <img src={book.ImageS} alt="" />
+                  <img src={book.imageS} alt="" />
                 </td>
-                <td>{book.ISBN}</td>
-                <td>{book.Title}</td>
-                <td>{book.Author}</td>
-                <td>{book.Publisher}</td>
-                <td>{book.PublicYear}</td>
-                <td>5</td>
+                <td>{book.isbn}</td>
+                <td>{book.title}</td>
+                <td>{book.author}</td>
+                <td>{book.publisher}</td>
+                <td>{book.publicYear}</td>
+                <td>{book.quantity}</td>
                 <td>
                   <button
                     type="button"
                     className="btn btn-success m-5"
-                    onClick={() => handleEdit(book.ISBN)}
+                    onClick={() => handleEdit(book.id)}
                   >
                     Edit
                   </button>
-                  <button type="button" className="btn btn-danger m-5">
+                  <button
+                    type="button"
+                    className="btn btn-danger m-5"
+                    onClick={() => handleDelete(book.id, data)}
+                  >
                     Delete
                   </button>
                 </td>

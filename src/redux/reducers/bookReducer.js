@@ -5,6 +5,9 @@ import {
   POST_BOOKS_REQUEST,
   POST_BOOKS_SUCCESS,
   POST_BOOKS_ERROR,
+  DELETE_BOOKS_REQUEST,
+  DELETE_BOOKS_SUCCESS,
+  DELETE_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 const initialState = {
@@ -45,7 +48,6 @@ const bookReducer = (state = initialState, action) => {
         ...state,
         requesting: false,
         success: true,
-        data: action.payload,
       };
     case POST_BOOKS_ERROR:
       return {
@@ -54,7 +56,29 @@ const bookReducer = (state = initialState, action) => {
         success: false,
         message: action.payload,
       };
-
+    case DELETE_BOOKS_REQUEST:
+      return {
+        ...state,
+        requesting: true,
+      };
+    case DELETE_BOOKS_SUCCESS:
+      console.log(action.payload);
+      action.payload.payloadData = action.payload.payloadData.filter(
+        (book) => book.id !== action.payload.payloadId
+      );
+      return {
+        ...state,
+        requesting: false,
+        success: true,
+        data: action.payload.payloadData,
+      };
+    case DELETE_BOOKS_ERROR:
+      return {
+        ...state,
+        requesting: false,
+        success: false,
+        message: action.payload,
+      };
     default:
       return state;
   }

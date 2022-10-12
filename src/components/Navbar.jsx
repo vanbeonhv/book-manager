@@ -5,20 +5,22 @@ import avatar from "../data/avatar.jpg";
 
 const Navbar = () => {
   return (
-    <div className="w-100 ">
-      <div className="d-flex justify-content-between mx-24 p-8">
-        <button className="btn text-primary px-12 fs-6">
+    // <div className="position-fixed top-0">
+    <div className="d-flex justify-content-between py-8 px-2 bg-secondary">
+      <div>
+        <button className="btn text-primary fs-6">
           <AiOutlineMenu />
         </button>
-        <div className="d-flex align-items-center gap-5">
-          <img src={avatar} alt="avatar" className="rounded-circle h-32 w-32" />
-          <p className="mb-0">
-            Hi, <span className="fw-semibold">Selena</span>
-          </p>
-          <MdKeyboardArrowDown />
-        </div>
+      </div>
+      <div className="d-flex align-items-center gap-5 me-10">
+        <img src={avatar} alt="avatar" className="rounded-circle h-32 w-32" />
+        <p className="mb-0">
+          Hi, <span className="fw-semibold">Selena</span>
+        </p>
+        <MdKeyboardArrowDown />
       </div>
     </div>
+    // </div>
   );
 };
 

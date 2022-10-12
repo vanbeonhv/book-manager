@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { loadEditBooks } from "../redux/actions/bookActions";
+import { editBooks, loadEditBooks } from "../redux/actions/bookActions";
 
 const booksSchema = Yup.object().shape({
   isbn: Yup.number().required("Required"),
@@ -18,13 +18,10 @@ const booksSchema = Yup.object().shape({
 
 const EditBooks = () => {
   const { id } = useParams();
-  console.log("10");
   const data = useSelector((state) => state.books.data);
   const requesting = useSelector((state) => state.books.requesting);
   const success = useSelector((state) => state.books.success);
-  console.log("requesting:" + requesting + ", success: " + success);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [form, setForm] = useState({});
 
   useEffect(() => {
@@ -33,16 +30,10 @@ const EditBooks = () => {
         setForm(res.data);
       })
     );
-    // console.log("9");
-    // if (!requesting && success) {
-    //   setForm(data);
-    //   console.log("11");
-    // }
   }, []);
-  console.log(data);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // console.log(form);
   };
   return (
     <div className="row">
@@ -53,7 +44,7 @@ const EditBooks = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={() => {
-            // dispatch(editBooks(form));
+            dispatch(editBooks(id, form));
             alert("Edit successfully!");
           }}
         >

@@ -9,8 +9,9 @@ import {
   DELETE_BOOKS_SUCCESS,
   DELETE_BOOKS_ERROR,
   FETCH_EDIT_BOOKS_REQUEST,
-  FETCH_EDIT_BOOKS_SUCCESS,
-  FETCH_EDIT_BOOKS_ERROR,
+  EDIT_BOOKS_REQUEST,
+  EDIT_BOOKS_SUCCESS,
+  EDIT_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 const initialState = {
@@ -23,13 +24,11 @@ const initialState = {
 const bookReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_BOOKS_REQUEST:
-      console.log("1");
       return {
         ...state,
         requesting: true,
       };
     case FETCH_BOOKS_SUCCESS:
-      console.log("2");
       return {
         ...state,
         requesting: false,
@@ -94,15 +93,21 @@ const bookReducer = (state = initialState, action) => {
         ...state,
         requesting: true,
       };
-    case FETCH_EDIT_BOOKS_SUCCESS:
+    case EDIT_BOOKS_REQUEST:
       console.log("8");
+      return {
+        ...state,
+        requesting: true,
+      };
+    case EDIT_BOOKS_SUCCESS:
+      console.log("9");
       return {
         ...state,
         requesting: false,
         success: true,
         data: action.payload,
       };
-    case FETCH_EDIT_BOOKS_ERROR:
+    case EDIT_BOOKS_ERROR:
       return {
         ...state,
         requesting: false,

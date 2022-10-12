@@ -2,7 +2,8 @@
 $theme-colors: (
   "primary": #03c9d7,
   "danger": #e32a20,
-  "success": #20e33d
+  "success": #09d127,
+  'light': #fff,
 );
 
 $utilities: (
@@ -35,6 +36,7 @@ $spacers: (
   12: $spacer * 12,
   16: $spacer * 16,
   24: $spacer * 24,
+  48: $spacer * 48,
   280: $spacer * 280,
   500: $spacer * 500,
 );

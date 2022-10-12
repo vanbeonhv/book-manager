@@ -28,14 +28,14 @@ const Books = () => {
       <div className="text-end">
         <button
           type="button"
-          className="btn btn-primary m-10"
+          className="btn btn-primary m-10 text-white"
           onClick={handleAdd}
         >
           Add
         </button>
       </div>
-      <table className="table table-hover table-stripped table-bordered table-responsive">
-        <thead className="table-light">
+      <table className="table table-hover table-stripped table-bordered table-responsive ">
+        <thead className="table-light align-middle">
           <tr>
             <th>Cover</th>
             <th>ISBN</th>
@@ -47,7 +47,7 @@ const Books = () => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody className="table-group-divider">
+        <tbody className="table-group-divider align-middle">
           {requesting ? (
             <tr>
               <td>Loading</td>
@@ -67,7 +67,7 @@ const Books = () => {
                 <td>
                   <button
                     type="button"
-                    className="btn btn-success m-5"
+                    className="btn btn-success m-5 text-white"
                     onClick={() => handleEdit(book.id)}
                   >
                     Edit

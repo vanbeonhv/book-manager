@@ -1,0 +1,22 @@
+/* responsive */
+
+.sidebar_wrap {
+  width: 280px;
+}
+@media screen and (max-width: 1200px) {
+  .sidebar_wrap {
+    width: 64px;
+  }
+
+  .sidebar__menu {
+    display: none;
+  }
+
+  .sidebar__name {
+    display: none;
+  }
+
+  .sidebar__logo {
+    padding: 10px;
+  }
+}

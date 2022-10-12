@@ -10,8 +10,9 @@ import {
   DELETE_BOOKS_SUCCESS,
   DELETE_BOOKS_ERROR,
   FETCH_EDIT_BOOKS_REQUEST,
-  FETCH_EDIT_BOOKS_SUCCESS,
-  FETCH_EDIT_BOOKS_ERROR,
+  EDIT_BOOKS_REQUEST,
+  EDIT_BOOKS_SUCCESS,
+  EDIT_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 export const loadBooks = () => async (dispatch) => {
@@ -71,20 +72,27 @@ export const deleteBooks = (payloadId, payloadData) => async (dispatch) => {
   }
 };
 
-export const loadEditBooks = (payload, van) => async (dispatch) => {
+export const loadEditBooks = (payloadId, payloadCb) => async (dispatch) => {
+  dispatch({ type: FETCH_EDIT_BOOKS_REQUEST });
+  const url = "http://localhost:3001/api/books/" + payloadId;
+  const response = await axios.get(url);
+  payloadCb(response);
+};
+
+export const editBooks = (payloadId, payloadData) => async (dispatch) => {
   try {
-    dispatch({ type: FETCH_EDIT_BOOKS_REQUEST });
-    const url = "http://localhost:3001/api/books/" + payload;
-    const response = await axios.get(url);
-    van(response);
-    // dispatch({
-    //   type: FETCH_EDIT_BOOKS_SUCCESS,
-    //   payload: response.data,
-    // });
+    // console.log(payload);
+    dispatch({ type: EDIT_BOOKS_REQUEST });
+    const url = "http://localhost:3001/api/books/" + payloadId;
+    const response = await axios.put(url, payloadData);
+    dispatch({
+      type: EDIT_BOOKS_SUCCESS,
+      payload: response.data,
+    });
   } catch (error) {
     console.log(error);
     dispatch({
-      type: FETCH_EDIT_BOOKS_ERROR,
+      type: EDIT_BOOKS_ERROR,
       payload: error,
     });
   }

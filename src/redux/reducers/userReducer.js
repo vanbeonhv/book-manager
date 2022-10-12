@@ -1,4 +1,8 @@
-import { FETCH_USER } from "../constants/userConstants";
+import {
+  FETCH_USER,
+  FETCH_UNIVERSITY,
+  ADD_USER,
+} from "../constants/userConstants";
 
 const initialState = {
   data: "",
@@ -8,6 +12,17 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER:
+      console.log(action.payload);
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case FETCH_UNIVERSITY:
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case ADD_USER:
       return {
         ...state,
         data: action.payload,

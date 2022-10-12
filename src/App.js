@@ -11,6 +11,8 @@ import EditBooks from "./pages/EditBooks";
 import BorrowingManager from "./pages/BorrowingManager";
 import AddUsers from "./pages/AddUsers";
 
+import Layout from "./layout/Layout";
+
 function App() {
   return (
     <div className="wrapper">

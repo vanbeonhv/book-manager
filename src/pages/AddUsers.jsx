@@ -1,42 +1,21 @@
-import {
-  ErrorMessage,
-  Field,
-  Form,
-  Formik,
-  useField,
-  useFormikContext,
-} from "formik";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { addBooks } from "../redux/actions/bookActions";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format, parseISO } from "date-fns";
+import { addBooks, loadBooks } from "../redux/actions/bookActions";
+import moment from "moment/moment";
+import { addUsers, loadUniversity } from "../redux/actions/userActions";
 
 const booksSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   school: Yup.string().required("Required"),
-  class: Yup.string().required("Required"),
-  borrow_day: Yup.date().required("Required"),
+  book: Yup.string().required("Required"),
+  borrow_date: Yup.date().required("Required"),
+  return_date: Yup.date(),
   status: Yup.string().required("Required"),
 });
 
-const DatePickerField = ({ ...props }) => {
-  const { setFieldValue } = useFormikContext();
-  const [field] = useField(props);
-  return (
-    <DatePicker
-      {...field}
-      {...props}
-      selected={(field.value && new Date(field.value)) || null}
-      // onChange={(val) => {
-      //   setFieldValue(field.name, val);
-      // }}
-    />
-  );
-};
 const AddUsers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,14 +23,28 @@ const AddUsers = () => {
   const [form, setForm] = useState({
     name: "",
     school: "",
-    class: "",
-    borrow_day: "",
-    return_day: "",
+    book: "",
+    borrow_date: "",
+    return_date: "",
     status: "",
   });
 
+  const universities = useSelector((state) => state.users.data);
+  const books = useSelector((state) => state.books.data);
+  useEffect(() => {
+    dispatch(loadUniversity());
+    dispatch(loadBooks());
+  }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+  };
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    const formattedDate = moment(date).format("yyy-MM-DD");
+    setForm({ ...form, [e.target.name]: formattedDate });
     console.log(form);
   };
 
@@ -64,14 +57,14 @@ const AddUsers = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={() => {
-            dispatch(addBooks(form));
+            dispatch(addUsers(form));
             alert("add successfully!");
             setForm({
               name: "",
               school: "",
-              class: "",
-              borrow_day: "",
-              return_day: "",
+              book: "",
+              borrow_date: "",
+              return_date: "",
               status: "",
             });
           }}
@@ -103,17 +96,15 @@ const AddUsers = () => {
               className="mb-10 form-select"
             >
               <option value="">Select an University</option>
-              <option value="Hyogo University">Hyogo University</option>
-              <option value="Indian Institute of Technology">
-                Indian Institute of Technology
-              </option>
-              <option value="Ensea">Ensea</option>
-              <option value="Islamic Azad University">
-                Islamic Azad University
-              </option>
-              <option value="Université Chrétienne Bilingue du Congo">
-                Université Chrétienne Bilingue du Congo
-              </option>
+              {universities ? (
+                universities.map((university) => (
+                  <option key={university} value={university}>
+                    {university}
+                  </option>
+                ))
+              ) : (
+                <option>Data empty</option>
+              )}
             </Field>
             <ErrorMessage
               name="school"
@@ -121,61 +112,71 @@ const AddUsers = () => {
               className="text-danger fs-6 fst-italic"
             />
             <label className="form-label text-capitalize" htmlFor="class">
-              class
+              book
             </label>
             <Field
-              name="class"
+              name="book"
               as="select"
-              value={form.class || ""}
+              value={form.book || ""}
               onChange={handleChange}
               className="mb-10 form-select"
             >
               <option value="">Select an Class</option>
-              <option value="11CNJ02">11CNJ02</option>
-              <option value="20CNADL03">20CNADL03</option>
-              <option value="06CNT01">06CNT01</option>
-              <option value="19CNH01">19CNH01</option>
-              <option value="08CNA02">08CNA02</option>
+              {books ? (
+                books.map((book) => (
+                  <option key={book.id} value={book.title}>
+                    {book.title}
+                  </option>
+                ))
+              ) : (
+                <option>Data empty</option>
+              )}
             </Field>
             <ErrorMessage
-              name="class"
+              name="book"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label text-capitalize" htmlFor="borrow_day">
+            <label className="form-label text-capitalize" htmlFor="borrow_date">
               borrow day
             </label>
-            <DatePickerField
-              name="borrow_day"
-              dateFormat="dd/MM/yyyy"
-              onChange={(value) =>
-                console.log(format(parseISO(value)), "dd-MM-yyyy")
-              }
-              // value={form.borrow_day || ""}
-              // className="mb-10 form-control"
-            />
-            {/* <Field
-              name="borrow_day"
-              type="text"
-              value={form.borrow_day || ""}
-              onChange={handleChange}
+            <input
+              type="date"
+              name="borrow_date"
+              value={form.borrow_date || ""}
+              onChange={handleDateChange}
               className="mb-10 form-control"
-            /> */}
+            />
             <ErrorMessage
-              name="borrow_day"
+              name="borrow_date"
               component="div"
               className="text-danger fs-6 fst-italic"
+            />
+            <label className="form-label text-capitalize" htmlFor="return_date">
+              return day
+            </label>
+            <input
+              type="date"
+              name="return_date"
+              value={form.return_date || ""}
+              onChange={handleChange}
+              className="mb-10 form-control"
             />
             <label className="form-label text-capitalize" htmlFor="status">
               status
             </label>
             <Field
               name="status"
-              type="text"
+              as="select"
               value={form.status || ""}
               onChange={handleChange}
-              className="mb-10 form-control"
-            />
+              className="mb-10 form-select"
+            >
+              <option value="">Select an Class</option>
+              <option value="11CNJ02">New</option>
+              <option value="20CNADL03">Old</option>
+              <option value="06CNT01">Damaged</option>
+            </Field>
             <ErrorMessage
               name="status"
               component="div"

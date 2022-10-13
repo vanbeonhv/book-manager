@@ -6,7 +6,7 @@ import avatar from "../data/avatar.jpg";
 const Navbar = () => {
   return (
     // <div className="position-fixed top-0">
-    <div className="d-flex justify-content-between py-8 px-2 bg-old">
+    <div className="d-flex justify-content-between py-8 px-2">
       <div>
         <button className="btn text-primary fs-6">
           <AiOutlineMenu />

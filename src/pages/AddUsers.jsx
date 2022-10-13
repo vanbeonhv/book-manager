@@ -29,10 +29,10 @@ const AddUsers = () => {
     status: "",
   });
   // let universities = [1, 2, 3];
-  let books = [1, 2, 3];
+  // let books = [1, 2, 3];
   const universities = useSelector((state) => state.users.data);
-  console.log(universities);
-  // const books = useSelector((state) => state.books.data);
+  // console.log(universities);
+  const books = useSelector((state) => state.books.data);
   useEffect(() => {
     dispatch(loadUniversity());
     dispatch(loadBooks());
@@ -45,7 +45,7 @@ const AddUsers = () => {
 
   const handleDateChange = (e) => {
     const date = e.target.value;
-    const formattedDate = moment(date).format("yyy-MM-DD");
+    const formattedDate = moment(date).format("MM/DD/yyyy");
     setForm({ ...form, [e.target.name]: formattedDate });
     console.log(form);
   };
@@ -98,7 +98,7 @@ const AddUsers = () => {
               className="mb-10 form-select"
             >
               <option value="">Select an University</option>
-              {/* {universities ? (
+              {universities ? (
                 universities.map((university) => (
                   <option key={university} value={university}>
                     {university}
@@ -106,7 +106,7 @@ const AddUsers = () => {
                 ))
               ) : (
                 <option>Data empty</option>
-              )} */}
+              )}
             </Field>
             <ErrorMessage
               name="school"
@@ -123,8 +123,9 @@ const AddUsers = () => {
               onChange={handleChange}
               className="mb-10 form-select"
             >
-              <option value="">Select an Class</option>
-              {/* {books ? (
+              <option value="">Select a book</option>
+              <option value="HUCE">HUCE</option>
+              {books ? (
                 books.map((book) => (
                   <option key={book.id} value={book.title}>
                     {book.title}
@@ -132,7 +133,7 @@ const AddUsers = () => {
                 ))
               ) : (
                 <option>Data empty</option>
-              )} */}
+              )}
             </Field>
             <ErrorMessage
               name="book"
@@ -145,7 +146,7 @@ const AddUsers = () => {
             <input
               type="date"
               name="borrow_date"
-              value={form.borrow_date || ""}
+              // value={form.borrow_date || ""}
               onChange={handleDateChange}
               className="mb-10 form-control"
             />
@@ -160,8 +161,8 @@ const AddUsers = () => {
             <input
               type="date"
               name="return_date"
-              value={form.return_date || ""}
-              onChange={handleChange}
+              // value={form.return_date || ""}
+              onChange={handleDateChange}
               className="mb-10 form-control"
             />
             <label className="form-label text-capitalize" htmlFor="status">
@@ -174,10 +175,10 @@ const AddUsers = () => {
               onChange={handleChange}
               className="mb-10 form-select"
             >
-              <option value="">Select an Class</option>
-              <option value="New">New</option>
-              <option value="Old">Old</option>
-              <option value="Damaged">Damaged</option>
+              <option value="">Select book's status</option>
+              <option value="new">New</option>
+              <option value="old">Old</option>
+              <option value="damaged">Damaged</option>
             </Field>
             <ErrorMessage
               name="status"

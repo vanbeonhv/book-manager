@@ -19,6 +19,7 @@ const Admin = () => {
         <Route path="/books" element={<Books />} />
         <Route path="/books/add" element={<AddBooks />} />
         <Route path="/books/edit/:id" element={<EditBooks />} />
+        <Route path="/students-manager" element={<Home />} />
         <Route path="/borrowing-manager" element={<BorrowingManager />} />
         <Route path="/borrowing-manager/add" element={<AddUsers />} />
         <Route

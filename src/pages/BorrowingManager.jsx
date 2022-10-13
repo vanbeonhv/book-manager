@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadUsers } from "../redux/actions/userActions";
+import { deleteUsers, loadUsers } from "../redux/actions/userActions";
 
 const BorrowingManager = () => {
   const data = useSelector((state) => state.users.data);
@@ -19,7 +19,7 @@ const BorrowingManager = () => {
     navigate("/borrowing-manager/edit/" + id);
   };
   const handleDelete = (id, data) => {
-    // dispatch(deletesers(id, data));
+    dispatch(deleteUsers(id, data));
   };
 
   const newStatus =
@@ -38,7 +38,7 @@ const BorrowingManager = () => {
         </button>
       </div>
       <div className="table-responsive">
-        <table className="table table-hover table-stripped table-bordered align-middle">
+        <table className="table table-sm table-hover table-stripped table-bordered align-middle">
           <thead className="table-primary align-middle text-center">
             <tr>
               <th>Name</th>

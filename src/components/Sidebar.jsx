@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { AiOutlineHome, AiOutlineBarChart } from "react-icons/ai";
 import { GiBlackBook } from "react-icons/gi";
-import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
+import { BsBoxArrowRight } from "react-icons/bs";
 import { IoLibraryOutline } from "react-icons/io5";
+import { FaUserGraduate } from "react-icons/fa";
 import "./Sidebar.css";
 const Sidebar = () => {
   const links = [
@@ -18,15 +19,15 @@ const Sidebar = () => {
       icon: <GiBlackBook />,
     },
     {
+      name: "Students Manager",
+      link: "students-manager",
+      icon: <FaUserGraduate />,
+    },
+    {
       name: "Borrowing Manager",
       link: "borrowing-manager",
       icon: <BsBoxArrowRight />,
     },
-    // {
-    //   name: "Returning Manager",
-    //   link: "returning-manager",
-    //   icon: <BsBoxArrowLeft />,
-    // },
     {
       name: "Report",
       link: "report",

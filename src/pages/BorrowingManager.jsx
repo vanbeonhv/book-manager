@@ -21,6 +21,11 @@ const BorrowingManager = () => {
   const handleDelete = (id, data) => {
     // dispatch(deletesers(id, data));
   };
+
+  const newStatus =
+    "badge text-bg-warning rounded-pill d-inline text-warning-bold";
+  const oldStatus = "badge badge-primary rounded-pill d-inline";
+  const damagedStatus = "badge badge-danger rounded-pill d-inline";
   return (
     <div className="">
       <div className="text-end">
@@ -32,53 +37,71 @@ const BorrowingManager = () => {
           Add
         </button>
       </div>
-      <table className="table table-hover table-stripped table-bordered table-responsive-lg align-middle">
-        <thead className="table-light align-middle">
-          <tr>
-            <th>Name</th>
-            <th>School</th>
-            <th>Book</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody className="table-group-divider">
-          {data ? (
-            data.map((user) => (
-              <tr key={user.id} className="">
-                <td>{user.name}</td>
-                <td>{user.school}</td>
-                <td>{user.book}</td>
-                <td>{user.borrow_date}</td>
-                <td>{user.return_date}</td>
-                <td>{user.status}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-success m-5 text-white"
-                    onClick={() => handleEdit(user.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-danger m-5"
-                    onClick={() => handleDelete(user.id, data)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+      <div className="table-responsive">
+        <table className="table table-hover table-stripped table-bordered align-middle">
+          <thead className="table-primary align-middle text-center">
             <tr>
-              <td>Data empty</td>
+              <th>Name</th>
+              <th>School</th>
+              <th>Book</th>
+              <th>Borrow Date</th>
+              <th>Return Date</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="table-group-divider">
+            {data ? (
+              data.map((user) => {
+                let statusStyle = "";
+                // (user.status = "New")
+                //   ? (statusStyle = newStatus)
+                //   : (user.status = "Old")
+                //   ? (statusStyle = oldStatus)
+                //   : (statusStyle = damagedStatus);
+
+                return (
+                  <tr key={user.id} className="">
+                    {/* {console.log(user.id)} */}
+                    <td>{user.name}</td>
+                    <td>{user.school}</td>
+                    <td>{user.book}</td>
+                    <td className="text-center">{user.borrow_date}</td>
+                    <td className="text-center">{user.return_date}</td>
+                    <td className="text-center">
+                      <span
+                        className={`badge rounded-pill d-inline text-capitalize text-${user.status}-bold text-bg-${user.status} `}
+                      >
+                        {user.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-success m-5 text-white"
+                        onClick={() => handleEdit(user.id)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger m-5"
+                        onClick={() => handleDelete(user.id, data)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td>Data empty</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

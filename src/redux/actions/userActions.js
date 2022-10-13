@@ -27,6 +27,6 @@ export const addUsers = (payload) => async (dispatch) => {
 export const loadUniversity = () => async (dispatch) => {
   const url = "http://localhost:3001/api/university";
   const response = await axios.get(url);
+  console.log(response);
   dispatch({ type: FETCH_UNIVERSITY, payload: response.data });
-  // console.log(response);
 };

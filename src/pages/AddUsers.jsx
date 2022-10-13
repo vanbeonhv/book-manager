@@ -28,9 +28,11 @@ const AddUsers = () => {
     return_date: "",
     status: "",
   });
-
+  // let universities = [1, 2, 3];
+  let books = [1, 2, 3];
   const universities = useSelector((state) => state.users.data);
-  const books = useSelector((state) => state.books.data);
+  console.log(universities);
+  // const books = useSelector((state) => state.books.data);
   useEffect(() => {
     dispatch(loadUniversity());
     dispatch(loadBooks());
@@ -96,7 +98,7 @@ const AddUsers = () => {
               className="mb-10 form-select"
             >
               <option value="">Select an University</option>
-              {universities ? (
+              {/* {universities ? (
                 universities.map((university) => (
                   <option key={university} value={university}>
                     {university}
@@ -104,7 +106,7 @@ const AddUsers = () => {
                 ))
               ) : (
                 <option>Data empty</option>
-              )}
+              )} */}
             </Field>
             <ErrorMessage
               name="school"
@@ -122,7 +124,7 @@ const AddUsers = () => {
               className="mb-10 form-select"
             >
               <option value="">Select an Class</option>
-              {books ? (
+              {/* {books ? (
                 books.map((book) => (
                   <option key={book.id} value={book.title}>
                     {book.title}
@@ -130,7 +132,7 @@ const AddUsers = () => {
                 ))
               ) : (
                 <option>Data empty</option>
-              )}
+              )} */}
             </Field>
             <ErrorMessage
               name="book"
@@ -173,9 +175,9 @@ const AddUsers = () => {
               className="mb-10 form-select"
             >
               <option value="">Select an Class</option>
-              <option value="11CNJ02">New</option>
-              <option value="20CNADL03">Old</option>
-              <option value="06CNT01">Damaged</option>
+              <option value="New">New</option>
+              <option value="Old">Old</option>
+              <option value="Damaged">Damaged</option>
             </Field>
             <ErrorMessage
               name="status"

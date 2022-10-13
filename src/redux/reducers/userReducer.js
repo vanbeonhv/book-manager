@@ -18,6 +18,7 @@ const userReducer = (state = initialState, action) => {
         data: action.payload,
       };
     case FETCH_UNIVERSITY:
+      console.log("fetching university");
       return {
         ...state,
         data: action.payload,

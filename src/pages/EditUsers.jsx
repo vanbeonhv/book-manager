@@ -1,11 +1,16 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { addBooks, loadBooks } from "../redux/actions/bookActions";
+import { loadBooks } from "../redux/actions/bookActions";
 import moment from "moment/moment";
-import { addUsers, loadUniversities } from "../redux/actions/userActions";
+import {
+  addUsers,
+  editUsers,
+  loadEditUsers,
+  loadUniversities,
+} from "../redux/actions/userActions";
 
 const booksSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -16,9 +21,10 @@ const booksSchema = Yup.object().shape({
   status: Yup.string().required("Required"),
 });
 
-const AddUsers = () => {
+const EditUsers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const [form, setForm] = useState({
     name: "",
@@ -28,10 +34,14 @@ const AddUsers = () => {
     return_date: "",
     status: "",
   });
-  // let universities = [1, 2, 3];
-  // let books = [1, 2, 3];
-  // const universities = useSelector((state) => state.users.data);
-  // console.log(universities);
+
+  useEffect(() => {
+    dispatch(
+      loadEditUsers(id, (res) => {
+        setForm(res.data);
+      })
+    );
+  }, []);
   const books = useSelector((state) => state.books.data);
   const [universities, setUniversities] = useState([]);
   useEffect(() => {
@@ -64,8 +74,8 @@ const AddUsers = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={() => {
-            dispatch(addUsers(form));
-            alert("add successfully!");
+            dispatch(editUsers(id, form));
+            alert("edit successfully!");
             setForm({
               name: "",
               school: "",
@@ -123,22 +133,11 @@ const AddUsers = () => {
             </label>
             <Field
               name="book"
-              as="select"
+              type="text"
               value={form.book || ""}
               onChange={handleChange}
-              className="mb-10 form-select"
-            >
-              <option value="">Select a book</option>
-              {books ? (
-                books.map((book) => (
-                  <option key={book.id} value={book.title}>
-                    {book.title}
-                  </option>
-                ))
-              ) : (
-                <option>Data empty</option>
-              )}
-            </Field>
+              className="mb-10 form-control"
+            ></Field>
             <ErrorMessage
               name="book"
               component="div"
@@ -147,13 +146,21 @@ const AddUsers = () => {
             <label className="form-label text-capitalize" htmlFor="borrow_date">
               borrow day
             </label>
-            <input
+            {/* <input
               type="date"
               name="borrow_date"
               // value={form.borrow_date || ""}
               onChange={handleDateChange}
               className="mb-10 form-control"
-            />
+            /> */}
+            <Field
+              name="borrow_date"
+              type="text"
+              value={form.borrow_date || ""}
+              onChange={handleChange}
+              className="mb-10 form-control"
+              placeholder="mm/dd/yyyy"
+            ></Field>
             <ErrorMessage
               name="borrow_date"
               component="div"
@@ -162,13 +169,21 @@ const AddUsers = () => {
             <label className="form-label text-capitalize" htmlFor="return_date">
               return day
             </label>
-            <input
+            {/* <input
               type="date"
               name="return_date"
               // value={form.return_date || ""}
               onChange={handleDateChange}
               className="mb-10 form-control"
-            />
+            /> */}
+            <Field
+              name="return_date"
+              type="text"
+              value={form.return_date || ""}
+              onChange={handleChange}
+              className="mb-10 form-control"
+              placeholder="mm/dd/yyyy"
+            ></Field>
             <label className="form-label text-capitalize" htmlFor="status">
               status
             </label>
@@ -202,4 +217,4 @@ const AddUsers = () => {
   );
 };
 
-export default AddUsers;
+export default EditUsers;

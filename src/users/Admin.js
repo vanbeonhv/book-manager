@@ -9,6 +9,7 @@ import EditBooks from "../pages/EditBooks";
 import BorrowingManager from "../pages/BorrowingManager";
 import AddUsers from "../pages/AddUsers";
 import Layout from "../layout/Layout";
+import EditUsers from "../pages/EditUsers";
 
 const Admin = () => {
   return (
@@ -22,10 +23,7 @@ const Admin = () => {
         <Route path="/students-manager" element={<Home />} />
         <Route path="/borrowing-manager" element={<BorrowingManager />} />
         <Route path="/borrowing-manager/add" element={<AddUsers />} />
-        <Route
-          path="/borrowing-manager/edit/:id"
-          element={<BorrowingManager />}
-        />
+        <Route path="/borrowing-manager/edit/:id" element={<EditUsers />} />
         <Route path="/report" element={<Test />} />
       </Routes>
     </Layout>

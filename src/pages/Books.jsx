@@ -35,8 +35,8 @@ const Books = () => {
         </button>
       </div>
       <div className="table-responsive">
-        <table className="table table-hover table-stripped table-bordered table-responsive ">
-          <thead className="table-light align-middle">
+        <table className="table table-sm table-hover table-stripped table-bordered ">
+          <thead className="table-primary align-middle text-center ">
             <tr>
               <th>Cover</th>
               <th>ISBN</th>
@@ -56,16 +56,16 @@ const Books = () => {
             ) : data && data.length ? (
               data.map((book) => (
                 <tr key={book.id}>
-                  <td>
-                    <img src={book.imageS} alt="" />
+                  <td className="text-center ">
+                    <img src={book.imageS} alt="" className="h-75" />
                   </td>
                   <td>{book.isbn}</td>
                   <td>{book.title}</td>
                   <td>{book.author}</td>
                   <td>{book.publisher}</td>
-                  <td>{book.publicYear}</td>
-                  <td>{book.quantity}</td>
-                  <td>
+                  <td className="text-center">{book.publicYear}</td>
+                  <td className="text-center">{book.quantity}</td>
+                  <td className="d-flex no-wrap">
                     <button
                       type="button"
                       className="btn btn-success m-5 text-white"

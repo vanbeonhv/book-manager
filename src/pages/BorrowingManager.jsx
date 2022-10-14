@@ -5,7 +5,7 @@ import { deleteUsers, loadUsers } from "../redux/actions/userActions";
 
 const BorrowingManager = () => {
   const data = useSelector((state) => state.users.data);
-  // console.log(data);
+  console.log(data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,10 +22,6 @@ const BorrowingManager = () => {
     dispatch(deleteUsers(id, data));
   };
 
-  const newStatus =
-    "badge text-bg-warning rounded-pill d-inline text-warning-bold";
-  const oldStatus = "badge badge-primary rounded-pill d-inline";
-  const damagedStatus = "badge badge-danger rounded-pill d-inline";
   return (
     <div className="">
       <div className="text-end">
@@ -53,13 +49,6 @@ const BorrowingManager = () => {
           <tbody className="table-group-divider">
             {data ? (
               data.map((user) => {
-                let statusStyle = "";
-                // (user.status = "New")
-                //   ? (statusStyle = newStatus)
-                //   : (user.status = "Old")
-                //   ? (statusStyle = oldStatus)
-                //   : (statusStyle = damagedStatus);
-
                 return (
                   <tr key={user.id} className="">
                     {/* {console.log(user.id)} */}
@@ -75,7 +64,7 @@ const BorrowingManager = () => {
                         {user.status}
                       </span>
                     </td>
-                    <td>
+                    <td className="d-flex no-wrap">
                       <button
                         type="button"
                         className="btn btn-success m-5 text-white"

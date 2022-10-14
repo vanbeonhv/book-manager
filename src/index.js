@@ -6,10 +6,11 @@ import "./index.css";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import Admin from "./users/Admin";
+import LoginPage from "./pages/LoginPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <Admin />
+    <LoginPage />
   </Provider>
 );

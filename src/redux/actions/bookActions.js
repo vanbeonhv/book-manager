@@ -85,6 +85,7 @@ export const editBooks = (payloadId, payloadData) => async (dispatch) => {
     dispatch({ type: EDIT_BOOKS_REQUEST });
     const url = "http://localhost:3001/api/books/" + payloadId;
     const response = await axios.put(url, payloadData);
+    console.log(response);
     dispatch({
       type: EDIT_BOOKS_SUCCESS,
       payload: response.data,

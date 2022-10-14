@@ -3,6 +3,8 @@ import {
   FETCH_UNIVERSITY,
   ADD_USER,
   DELETE_USER,
+  DELETE_USER_REQUEST,
+  FETCH_EDIT_USER,
 } from "../constants/userConstants";
 
 const initialState = {
@@ -18,24 +20,18 @@ const userReducer = (state = initialState, action) => {
         ...state,
         data: action.payload,
       };
-    case FETCH_UNIVERSITY:
-      // console.log("fetching university");
-      return {
-        ...state,
-        data: action.payload,
-      };
-    case ADD_USER:
-      return {
-        ...state,
-        // data: action.payload,
-      };
+    // case ADD_USER:
+    //   return {
+    //     ...state,
+    // data: action.payload,
+    //   };
     case DELETE_USER:
       action.payload.payloadData = action.payload.payloadData.filter(
         (user) => user.id !== action.payload.payloadId
       );
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.payloadData,
       };
     default:
       return state;

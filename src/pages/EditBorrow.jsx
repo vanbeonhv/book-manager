@@ -1,11 +1,17 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { addBooks, loadBooks } from "../redux/actions/bookActions";
+import { loadBooks } from "../redux/actions/bookActions";
 import moment from "moment/moment";
-import { addUsers, loadUniversities } from "../redux/actions/userActions";
+import {
+  addUsers,
+  editUsers,
+  loadEditUsers,
+  loadUniversities,
+} from "../redux/actions/borrowActions";
+import axios from "axios";
 
 const booksSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -16,10 +22,12 @@ const booksSchema = Yup.object().shape({
   status: Yup.string().required("Required"),
 });
 
-const AddUsers = () => {
+const EditBorrow = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const today = new Date().toISOString().slice(0, 10);
+  const todayFormatted = moment(today).format("MM/DD/yyyy");
   const [form, setForm] = useState({
     name: "",
     school: "",
@@ -28,31 +36,27 @@ const AddUsers = () => {
     return_date: "",
     status: "",
   });
-  // let universities = [1, 2, 3];
-  // let books = [1, 2, 3];
-  // const universities = useSelector((state) => state.users.data);
-  // console.log(universities);
-  const books = useSelector((state) => state.books.data);
-  const [universities, setUniversities] = useState([]);
-  useEffect(() => {
-    dispatch(
-      loadUniversities((res) => {
-        setUniversities(res.data);
-      })
-    );
-    dispatch(loadBooks());
-  }, []);
-  // console.log(books);
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    // console.log(form);
-  };
 
-  const handleDateChange = (e) => {
-    const date = e.target.value;
-    const formattedDate = moment(date).format("MM/DD/yyyy");
-    setForm({ ...form, [e.target.name]: formattedDate });
-    // console.log(form);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios
+        .get("http://localhost:3001/api/users/" + id)
+        .catch((err) => {
+          throw err;
+        });
+      const borrowInfo = response.data;
+      setForm(borrowInfo);
+    };
+    fetchData();
+  }, []);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+      return_date: todayFormatted,
+    });
+    console.log(form);
   };
 
   return (
@@ -64,16 +68,8 @@ const AddUsers = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={() => {
-            dispatch(addUsers(form));
-            alert("add successfully!");
-            setForm({
-              name: "",
-              school: "",
-              book: "",
-              borrow_date: "",
-              return_date: "",
-              status: "",
-            });
+            dispatch(editUsers(id, form));
+            alert("edit successfully!");
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
@@ -84,8 +80,8 @@ const AddUsers = () => {
               name="name"
               type="text"
               value={form.name || ""}
-              onChange={handleChange}
               className="mb-10 form-control"
+              disabled
             />
             <ErrorMessage
               name="name"
@@ -97,22 +93,11 @@ const AddUsers = () => {
             </label>
             <Field
               name="school"
-              as="select"
+              type="text"
               value={form.school || ""}
-              onChange={handleChange}
               className="mb-10 form-select"
-            >
-              <option value="">Select an University</option>
-              {universities ? (
-                universities.map((university) => (
-                  <option key={university} value={university}>
-                    {university}
-                  </option>
-                ))
-              ) : (
-                <option>Data empty</option>
-              )}
-            </Field>
+              disabled
+            />
             <ErrorMessage
               name="school"
               component="div"
@@ -123,36 +108,26 @@ const AddUsers = () => {
             </label>
             <Field
               name="book"
-              as="select"
+              type="text"
               value={form.book || ""}
-              onChange={handleChange}
-              className="mb-10 form-select"
-            >
-              <option value="">Select a book</option>
-              {books ? (
-                books.map((book) => (
-                  <option key={book.id} value={book.title}>
-                    {book.title}
-                  </option>
-                ))
-              ) : (
-                <option>Data empty</option>
-              )}
-            </Field>
+              className="mb-10 form-control"
+              disabled
+            />
             <ErrorMessage
               name="book"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
             <label className="form-label text-capitalize" htmlFor="borrow_date">
-              borrow day
+              borrow date
             </label>
-            <input
-              type="date"
+            <Field
               name="borrow_date"
-              // value={form.borrow_date || ""}
-              onChange={handleDateChange}
+              type="text"
+              value={form.borrow_date || ""}
               className="mb-10 form-control"
+              placeholder="mm/dd/yyyy"
+              disabled
             />
             <ErrorMessage
               name="borrow_date"
@@ -160,14 +135,14 @@ const AddUsers = () => {
               className="text-danger fs-6 fst-italic"
             />
             <label className="form-label text-capitalize" htmlFor="return_date">
-              return day
+              return date
             </label>
-            <input
-              type="date"
+            <Field
               name="return_date"
-              // value={form.return_date || ""}
-              onChange={handleDateChange}
+              type="text"
+              value={form.return_date || ""}
               className="mb-10 form-control"
+              disabled
             />
             <label className="form-label text-capitalize" htmlFor="status">
               status
@@ -202,4 +177,4 @@ const AddUsers = () => {
   );
 };
 
-export default AddUsers;
+export default EditBorrow;

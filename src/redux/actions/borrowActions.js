@@ -6,10 +6,10 @@ import {
   DELETE_USER,
   DELETE_USER_REQUEST,
   FETCH_EDIT_USER,
-} from "../constants/userConstants";
+} from "../constants/borrowConstants";
 
-export const loadUsers = () => async (dispatch) => {
-  const url = "http://localhost:3001/api/users";
+export const loadBorrow = () => async (dispatch) => {
+  const url = "http://localhost:3001/api/borrow";
   const params = {
     _start: 35,
     _limit: 10,
@@ -19,13 +19,7 @@ export const loadUsers = () => async (dispatch) => {
   dispatch({ type: FETCH_USER, payload: response.data });
 };
 
-export const loadUniversities = (callback) => async (dispatch) => {
-  const url = "http://localhost:3001/api/university";
-  const response = await axios.get(url);
-  callback(response);
-};
-
-export const addUsers = (payload) => async (dispatch) => {
+export const addBorrow = (payload) => async (dispatch) => {
   const url = "http://localhost:3001/api/users";
   // console.log(payload);
 

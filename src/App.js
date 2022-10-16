@@ -9,7 +9,7 @@ import AddBooks from "./pages/AddBooks";
 import Test from "./pages/Test";
 import EditBooks from "./pages/EditBooks";
 import BorrowingManager from "./pages/BorrowingManager";
-import AddUsers from "./pages/AddUsers";
+import AddUsers from "./pages/AddBorrow";
 
 function App() {
   return (

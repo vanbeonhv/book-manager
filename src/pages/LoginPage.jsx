@@ -1,52 +1,102 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { loginCheck } from "../redux/actions/loginActions";
+import Admin from "../users/Admin";
+
+const loginSchema = Yup.object().shape({
+  username: Yup.string().required("Username required"),
+  password: Yup.string().required("Password required"),
+});
 
 const LoginPage = () => {
   // const navigate = useNavigate();
-  const handleLogin = () => {
-    // navigate("/admin");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const validUser = useSelector((state) => state.login.validUser);
+  // const requesting = useSelector((state) => state.login.requesting);
+  // console.log("loginInfo: " + loginInfo);
+  // console.log("requesting " + requesting);
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
+  // useEffect(() => {
+  //   dispatch(loginCheck(form));
+  // }, []);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
   return (
-    <div className="d-flex align-items-center justify-content-center vh-100">
-      <form onSubmit={handleLogin}>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
+    <div className="row position-relative vh-100 overflow-hidden">
+      {/* <Routes>
+        <Route path="/dashboard" element={<Admin />} />
+      </Routes> */}
+      <div className="col-4 vh-100 overflow-hidden">
+        <div className="border border-primary rounded-3 position-absolute top-50 start-50 translate-middle p-24">
+          <Formik
+            initialValues={form}
+            enableReinitialize={true}
+            validationSchema={loginSchema}
+            onSubmit={() => {
+              dispatch(loginCheck(form));
+              // navigate("dashboard");
+
+              console.log("validUser: " + validUser);
+              // setTimeout(() => {
+              if (validUser) {
+                alert("login successfully!");
+                navigate("dashboard");
+              } else {
+                alert("Invalid username or password");
+              }
+              // }, 1000);
+            }}
+          >
+            <Form className="d-flex flex-wrap flex-column">
+              <label className="form-label text-capitalize" htmlFor="username">
+                username
+              </label>
+              <Field
+                name="username"
+                type="email"
+                value={form.username || ""}
+                onChange={handleChange}
+                className="mb-10 form-control"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-danger fs-6 fst-italic"
+              />
+              <label className="form-label text-capitalize" htmlFor="password">
+                password
+              </label>
+              <Field
+                name="password"
+                type="password"
+                value={form.password || ""}
+                onChange={handleChange}
+                className="mb-10 form-control"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-danger fs-6 fst-italic"
+              />
+              <div className="text-center pt-24">
+                <button type="submit" className="btn btn-primary text-white">
+                  Login
+                </button>
+              </div>
+            </Form>
+          </Formik>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-          />
-        </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+      </div>
+      <div className="col-4"></div>
     </div>
   );
 };

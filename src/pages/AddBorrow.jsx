@@ -1,16 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { loadBooks } from "../redux/actions/bookActions";
 import moment from "moment/moment";
-import {
-  addUsers,
-  editUsers,
-  loadEditUsers,
-  loadUniversities,
-} from "../redux/actions/userActions";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
+import { addBorrow } from "../redux/actions/borrowActions";
 
 const booksSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -20,49 +16,53 @@ const booksSchema = Yup.object().shape({
   return_date: Yup.date(),
   status: Yup.string().required("Required"),
 });
+const today = new Date().toISOString().slice(0, 10);
+const todayFormatted = moment(today).format("MM/DD/yyyy");
 
-const EditUsers = () => {
+const AddBorrow = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const [form, setForm] = useState({
     name: "",
     school: "",
     book: "",
-    borrow_date: "",
+    borrow_date: todayFormatted,
     return_date: "",
-    status: "",
+    status: "borrowing",
   });
-
-  useEffect(() => {
-    dispatch(
-      loadEditUsers(id, (res) => {
-        setForm(res.data);
-      })
-    );
-  }, []);
-  const books = useSelector((state) => state.books.data);
+  // const books = useSelector((state) => state.books.data);
+  const [students, setStudents] = useState([]);
   const [universities, setUniversities] = useState([]);
+  const [books, setBooks] = useState([]);
   useEffect(() => {
-    dispatch(
-      loadUniversities((res) => {
-        setUniversities(res.data);
-      })
-    );
-    dispatch(loadBooks());
-  }, []);
-  // console.log(books);
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    // console.log(form);
-  };
+    const fetchData = async () => {
+      const userURL = "http://localhost:3001/api/users";
+      const universityURL = "http://localhost:3001/api/university";
+      const bookURL = "http://localhost:3001/api/books";
 
-  const handleDateChange = (e) => {
-    const date = e.target.value;
-    const formattedDate = moment(date).format("MM/DD/yyyy");
-    setForm({ ...form, [e.target.name]: formattedDate });
-    // console.log(form);
+      const responses = await Promise.all([
+        axios.get(userURL),
+        axios.get(universityURL),
+        axios.get(bookURL),
+      ]).catch((err) => {
+        throw err;
+      });
+      const userData = await responses[0].data;
+      const universityData = await responses[1].data;
+      const bookData = await responses[2].data;
+
+      const studentsList = userData.map((student) => student.name);
+      setStudents(studentsList);
+      setUniversities(universityData);
+      const booksList = bookData.map((book) => book.title);
+      setBooks(booksList);
+    };
+    fetchData();
+  }, []);
+  const handleChange = (e) => {
+    setForm({ ...form, borrow_date: today, [e.target.name]: e.target.value });
+    console.log(form);
   };
 
   return (
@@ -74,15 +74,15 @@ const EditUsers = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={() => {
-            dispatch(editUsers(id, form));
-            alert("edit successfully!");
+            dispatch(addBorrow(form));
+            alert("add successfully!");
             setForm({
               name: "",
               school: "",
               book: "",
-              borrow_date: "",
+              borrow_date: todayFormatted,
               return_date: "",
-              status: "",
+              status: "borrowing",
             });
           }}
         >
@@ -92,11 +92,22 @@ const EditUsers = () => {
             </label>
             <Field
               name="name"
-              type="text"
+              as="select"
               value={form.name || ""}
               onChange={handleChange}
-              className="mb-10 form-control"
-            />
+              className="mb-10 form-select"
+            >
+              <option value="">Select students</option>
+              {students ? (
+                students.map((student) => (
+                  <option key={uuidv4()} value={student}>
+                    {student}
+                  </option>
+                ))
+              ) : (
+                <option>Data empty</option>
+              )}
+            </Field>
             <ErrorMessage
               name="name"
               component="div"
@@ -115,7 +126,7 @@ const EditUsers = () => {
               <option value="">Select an University</option>
               {universities ? (
                 universities.map((university) => (
-                  <option key={university} value={university}>
+                  <option key={uuidv4()} value={university}>
                     {university}
                   </option>
                 ))
@@ -133,57 +144,42 @@ const EditUsers = () => {
             </label>
             <Field
               name="book"
-              type="text"
+              as="select"
               value={form.book || ""}
               onChange={handleChange}
-              className="mb-10 form-control"
-            ></Field>
+              className="mb-10 form-select overflow-hidden"
+            >
+              <option value="">Select a book</option>
+              {books ? (
+                books.map((book) => (
+                  <option key={uuidv4()} value={book}>
+                    {book}
+                  </option>
+                ))
+              ) : (
+                <option>Data empty</option>
+              )}
+            </Field>
             <ErrorMessage
               name="book"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
             <label className="form-label text-capitalize" htmlFor="borrow_date">
-              borrow day
+              borrow date
             </label>
-            {/* <input
-              type="date"
-              name="borrow_date"
-              // value={form.borrow_date || ""}
-              onChange={handleDateChange}
-              className="mb-10 form-control"
-            /> */}
             <Field
-              name="borrow_date"
               type="text"
+              name="borrow_date"
               value={form.borrow_date || ""}
-              onChange={handleChange}
               className="mb-10 form-control"
-              placeholder="mm/dd/yyyy"
-            ></Field>
+              disabled
+            />
             <ErrorMessage
               name="borrow_date"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label text-capitalize" htmlFor="return_date">
-              return day
-            </label>
-            {/* <input
-              type="date"
-              name="return_date"
-              // value={form.return_date || ""}
-              onChange={handleDateChange}
-              className="mb-10 form-control"
-            /> */}
-            <Field
-              name="return_date"
-              type="text"
-              value={form.return_date || ""}
-              onChange={handleChange}
-              className="mb-10 form-control"
-              placeholder="mm/dd/yyyy"
-            ></Field>
             <label className="form-label text-capitalize" htmlFor="status">
               status
             </label>
@@ -191,13 +187,10 @@ const EditUsers = () => {
               name="status"
               as="select"
               value={form.status || ""}
-              onChange={handleChange}
               className="mb-10 form-select"
+              disabled
             >
-              <option value="">Select book's status</option>
-              <option value="new">New</option>
-              <option value="old">Old</option>
-              <option value="damaged">Damaged</option>
+              <option value="borrowing">Borrowing</option>
             </Field>
             <ErrorMessage
               name="status"
@@ -217,4 +210,4 @@ const EditUsers = () => {
   );
 };
 
-export default EditUsers;
+export default AddBorrow;

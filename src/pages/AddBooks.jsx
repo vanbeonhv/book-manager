@@ -6,11 +6,15 @@ import * as Yup from "yup";
 import { addBooks } from "../redux/actions/bookActions";
 
 const booksSchema = Yup.object().shape({
-  isbn: Yup.number().required("Required"),
+  isbn: Yup.number()
+    .min(100000000, "Must be 9 numbers at least")
+    .max(999999999999, "Must be 12 numbers or less")
+    .required("Required"),
   title: Yup.string().required("Required"),
   author: Yup.string().required("Required"),
-  publicYear: Yup.number()
-    .max(2030, "Must be 2030 or less")
+  publishedYear: Yup.number()
+    .max(2022, "Still 2022 bro???")
+    .min(1970, "Must be 1970 at least")
     .required("Required"),
   publisher: Yup.string().required("Required"),
   quantity: Yup.number().max(100).required("Required"),
@@ -60,7 +64,7 @@ const AddBooks = () => {
             </label>
             <Field
               name="isbn"
-              type="text"
+              type="number"
               value={form.isbn || ""}
               onChange={handleChange}
               className="mb-10 form-control"
@@ -100,18 +104,18 @@ const AddBooks = () => {
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publicYear">
-              PublicYear
+            <label className="form-label" htmlFor="publishedYear">
+              Published Year
             </label>
             <Field
-              name="publicYear"
-              type="text"
-              value={form.publicYear || ""}
+              name="publishedYear"
+              type="number"
+              value={form.publishedYear || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publicYear"
+              name="publishedYear"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
@@ -135,7 +139,7 @@ const AddBooks = () => {
             </label>
             <Field
               name="quantity"
-              type="text"
+              type="number"
               value={form.quantity || ""}
               onChange={handleChange}
               className="mb-10 form-control"

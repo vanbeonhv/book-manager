@@ -19,8 +19,6 @@ const booksSchema = Yup.object().shape({
 const EditBooks = () => {
   const { id } = useParams();
   const data = useSelector((state) => state.books.data);
-  const requesting = useSelector((state) => state.books.requesting);
-  const success = useSelector((state) => state.books.success);
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
 
@@ -100,7 +98,7 @@ const EditBooks = () => {
             <Field
               name="publicYear"
               type="text"
-              value={form.publicYear || ""}
+              value={form.publishedYear || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />

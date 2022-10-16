@@ -1,18 +1,20 @@
 // $font-family-base: "Open Sans", Sans serif;
 $theme-colors: (
   "primary": #03c9d7,
-  "secondary": #6C757D,
+  "secondary": #9333EA,
   "danger": #e32a20ea,
   "success": #14A44D,
   'light': #fff,
   'warning': #fbf3dafb,
   'dark': #000,
-  'new': #D6F0E0,
+  'new': #8BE78B,
   'new-bold': #429c65,
-  'old': #FBF0DA,
+  'old': #FB9678,
   'old-bold': #73510D,
-  'damaged': #F8DBE0,
+  'damaged': #FF5C8E,
   'damaged-bold': #915761,
+  'borrowing': #04C9D7,
+  'borrowing-bold': #2B67B1,
 );
 
 $utilities: (
@@ -31,8 +33,37 @@ $utilities: (
     values: (
       32: 32px,
       75: 75px,
+      200: 200px,
     
       )),
+        "font-size": (
+      rfs: true,
+      property: font-size,
+      class: fs,
+      values: (
+        1: 2.5rem,
+        2: 2rem,
+        3: 1.75rem,
+        4: 1.5rem,
+        5: 1.25rem,
+        6: 1rem,
+        7: 0.75rem,
+        8: 0.5rem,
+        9: 0.25rem,
+        10: 0.1rem,
+      )
+    ),
+       "shadow": (
+      property: box-shadow,
+      class: shadow,
+      values: (
+        null: 0 7px 30px 0 hsla(210, 7%, 48%, .11),
+        // sm: $box-shadow-sm,
+        // lg: $box-shadow-lg,
+        card: rgba(0, 0, 0, 0.325) 0px 0px 9px 0px,
+        none: none,
+      )
+    ),
 );
 $spacer: 0.0625rem;
 $spacers: (
@@ -47,16 +78,29 @@ $spacers: (
   12: $spacer * 12,
   16: $spacer * 16,
   24: $spacer * 24,
+  32: $spacer * 32,
+  40: $spacer * 40,
   48: $spacer * 48,
   280: $spacer * 280,
   500: $spacer * 500,
 );
 
+$utilities: map-merge($utilities,
+    ("cursor": (property: cursor,
+        values: auto default pointer wait text move help not-allowed),
+    ));
+    
+$table-variants: (
+  "primary": #B8E8FC,
+  "success": #C8FFD4,
+  "secondary": #FDFDBD,
+  "white": #fff
+);
+
 $btn-link-hover-color: #fff;
-$box-shadow: 0 7px 30px 0 hsla(210, 7%, 48%, .11);
+$box-shadow: 0 7px 30px 0 hsla(210, 7%, 48%, .11); 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 
 
 
-    

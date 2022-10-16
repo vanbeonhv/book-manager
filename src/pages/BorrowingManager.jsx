@@ -1,22 +1,22 @@
+import moment from "moment";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUsers, loadUsers } from "../redux/actions/userActions";
+import { deleteUsers, loadBorrow } from "../redux/actions/borrowActions";
 
 const BorrowingManager = () => {
-  const data = useSelector((state) => state.users.data);
-  console.log(data);
+  const data = useSelector((state) => state.borrow.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadUsers());
+    dispatch(loadBorrow());
   }, []);
 
   const handleAdd = () => {
-    navigate("/borrowing-manager/add");
+    navigate("add");
   };
-  const handleEdit = (id) => {
-    navigate("/borrowing-manager/edit/" + id);
+  const handleReturn = (id) => {
+    navigate("return/" + id);
   };
   const handleDelete = (id, data) => {
     dispatch(deleteUsers(id, data));
@@ -35,7 +35,7 @@ const BorrowingManager = () => {
       </div>
       <div className="table-responsive">
         <table className="table table-sm table-hover table-stripped table-bordered align-middle">
-          <thead className="table-primary align-middle text-center">
+          <thead className="table-success align-middle text-center">
             <tr>
               <th>Name</th>
               <th>School</th>
@@ -43,7 +43,7 @@ const BorrowingManager = () => {
               <th>Borrow Date</th>
               <th>Return Date</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -55,30 +55,44 @@ const BorrowingManager = () => {
                     <td>{user.name}</td>
                     <td>{user.school}</td>
                     <td>{user.book}</td>
-                    <td className="text-center">{user.borrow_date}</td>
-                    <td className="text-center">{user.return_date}</td>
+                    <td className="text-center">
+                      {
+                        (user.borrow_date = moment(user.borrow_date).format(
+                          "MM/DD/yyyy"
+                        ))
+                      }
+                    </td>
+                    <td className="text-center">
+                      {user.return_date
+                        ? (user.return_date = moment(user.return_date).format(
+                            "MM/DD/yyyy"
+                          ))
+                        : ""}
+                    </td>
                     <td className="text-center">
                       <span
-                        className={`badge rounded-pill d-inline text-capitalize text-${user.status}-bold text-bg-${user.status} `}
+                        className={`badge rounded-pill d-inline text-capitalize text-white fw-light text-bg-${user.status} `}
                       >
                         {user.status}
                       </span>
                     </td>
-                    <td className="d-flex no-wrap">
-                      <button
-                        type="button"
-                        className="btn btn-success m-5 text-white"
-                        onClick={() => handleEdit(user.id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger m-5"
-                        onClick={() => handleDelete(user.id, data)}
-                      >
-                        Delete
-                      </button>
+                    <td>
+                      <div className="d-flex no-wrap">
+                        <button
+                          type="button"
+                          className="btn btn-secondary m-5 text-white"
+                          onClick={() => handleReturn(user.id)}
+                        >
+                          Return
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger m-5"
+                          onClick={() => handleDelete(user.id, data)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

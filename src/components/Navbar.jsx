@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import avatar from "../data/avatar.jpg";
+import { logout } from "../redux/actions/loginActions";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [display, setDisplay] = useState("d-none");
   const loginInfo = useSelector((state) => state.login.data);
 
@@ -20,12 +22,12 @@ const Navbar = () => {
       </div>
       <div className="d-flex align-items-center gap-5 me-12 position-relative">
         <img
-          src={loginInfo[0].img}
+          src={loginInfo[0].img || ""}
           alt="avatar"
           className="rounded-circle h-32 w-32"
         />
         <p className="mb-0">
-          Hi, <span className="fw-semibold">{loginInfo[0].name}</span>
+          Hi, <span className="fw-semibold">{loginInfo[0].name || ""}</span>
         </p>
         <div
           className="p-4 cursor-pointer"
@@ -44,7 +46,7 @@ const Navbar = () => {
         <p className="fst-italic fs-7">
           You logged as:
           <span className="fw-semibold fst-normal fs-6 ms-4 text-capitalize text-primary">
-            {loginInfo[0].role}
+            {loginInfo[0].role || ""}
           </span>
         </p>
         <hr />
@@ -52,7 +54,10 @@ const Navbar = () => {
           <button
             type="button"
             className="btn btn-outline-danger"
-            onClick={() => navigate("../../")}
+            onClick={() => {
+              dispatch(logout());
+              navigate("../../");
+            }}
           >
             Logout
           </button>

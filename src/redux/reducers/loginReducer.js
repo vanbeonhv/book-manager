@@ -1,29 +1,28 @@
-import { CHECK_LOGIN, CHECK_LOGIN_REQUEST } from "../constants/loginConstants";
+import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../constants/loginConstants";
 
 const initialState = {
-  validUser: false,
+  validUser: null,
   data: "",
-  message: "",
 };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHECK_LOGIN:
+    case LOGIN_SUCCESS:
       // console.log(action.payload);
-      if (action.payload.length === 1) {
-        return {
-          ...state,
-          data: action.payload,
-          validUser: true,
-        };
-      }
-      if (action.payload.length === 0) {
-        return {
-          ...state,
-          data: action.payload,
-        };
-      }
-
+      return {
+        ...state,
+        data: action.payload,
+        validUser: true,
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        validUser: false,
+      };
+    case LOGOUT:
+      return {
+        validUser: false,
+      };
     default:
       return state;
   }

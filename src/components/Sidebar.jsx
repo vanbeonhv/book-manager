@@ -11,7 +11,7 @@ const Sidebar = () => {
   let links = [];
   const loginInfo = useSelector((state) => state.login.data);
   console.log(loginInfo[0].role);
-  if (loginInfo[0].role === "admin") {
+  if (loginInfo[0].role === "admin" || "") {
     links = [
       {
         name: "Home",
@@ -40,7 +40,7 @@ const Sidebar = () => {
       },
     ];
   }
-  if (loginInfo[0].role === "manager") {
+  if (loginInfo[0].role === "manager" || "") {
     links = [
       {
         name: "Home",

@@ -4,8 +4,8 @@ const Report = () => {
   return (
     <div>
       <div className="row">
-        <div className="col-5 bg-warning p-24 m-32 rounded-4">
-          <div class="row justify-content-center align-items-center g-2">
+        <div className="col-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-warning rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">New update</p>
               <p className="mb-0 fw-bold">The night ship</p>
@@ -19,8 +19,8 @@ const Report = () => {
             </div>
           </div>
         </div>
-        <div className="col-5 bg-new p-24 m-32 rounded-4">
-          <div class="row justify-content-center align-items-center g-2">
+        <div className="col-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-new rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">The most borrowing book</p>
               <p className="mb-0 fw-bold">The night ship</p>
@@ -40,8 +40,8 @@ const Report = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col-5 bg-borrowing p-24 m-32 rounded-4">
-          <div class="row justify-content-center align-items-center g-2">
+        <div className="col-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-borrowing rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">The most active user: </p>
               <p className="mb-0 fw-bold">Lexine Kovacs</p>
@@ -55,8 +55,8 @@ const Report = () => {
             </div>
           </div>
         </div>
-        <div className="col-5 bg-old p-24 m-32 rounded-4">
-          <div class="row justify-content-center align-items-center g-2">
+        <div className="col-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-old rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">Last borrowing:</p>
               <p className="mb-0 fw-bold">Sib Miell</p>

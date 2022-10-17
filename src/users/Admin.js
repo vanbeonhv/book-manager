@@ -17,8 +17,6 @@ import EditBorrow from "../pages/EditBorrow";
 import Report from "../pages/Report";
 
 const Admin = () => {
-  const loginInfo = useSelector((state) => state.login.data);
-
   return (
     <Layout>
       <Routes>

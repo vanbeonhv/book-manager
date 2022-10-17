@@ -10,19 +10,29 @@ const loginSchema = Yup.object().shape({
   username: Yup.string().required("Username required"),
   password: Yup.string().required("Password required"),
 });
-
+let n = 0;
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const validUser = useSelector((state) => state.login.validUser);
+  let validUser = useSelector((state) => state.login.validUser);
+  let data = useSelector((state) => state.login.data);
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const login = () => {
+    dispatch(loginCheck(form));
+  };
+  useEffect(() => {
+    if (validUser) {
+      alert("login successfully!");
+      console.log("Logined");
+      navigate("dashboard");
+    }
+  }, [validUser]);
   return (
     <div className="row position-relative vh-100 vw-100 overflow-hidden">
       <div className="col-4 vh-100 overflow-hidden">
@@ -32,16 +42,7 @@ const LoginPage = () => {
             enableReinitialize={true}
             validationSchema={loginSchema}
             onSubmit={() => {
-              dispatch(loginCheck(form));
-              console.log("validUser: " + validUser);
-              // setTimeout(() => {
-              if (validUser) {
-                alert("login successfully!");
-                navigate("dashboard");
-              } else {
-                alert("Invalid username or password");
-              }
-              // }, 1000);
+              login();
             }}
           >
             <Form className="d-flex flex-wrap flex-column">

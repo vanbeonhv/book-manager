@@ -24,7 +24,7 @@
   overflow: hidden;
   min-height: 100vh;
   background-color: #F0F2F5;
-  box-shadow: rgba(0, 0, 0, 0.325) 0px 0px 9px 0px
+  /* box-shadow: rgba(0, 0, 0, 0.325) 0px 0px 9px 0px */
   /* position: relative; */
   /* z-index: 1; */
 }

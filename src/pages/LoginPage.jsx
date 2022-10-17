@@ -12,29 +12,19 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginPage = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const validUser = useSelector((state) => state.login.validUser);
-  // const requesting = useSelector((state) => state.login.requesting);
-  // console.log("loginInfo: " + loginInfo);
-  // console.log("requesting " + requesting);
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
-  // useEffect(() => {
-  //   dispatch(loginCheck(form));
-  // }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   return (
-    <div className="row position-relative vh-100 overflow-hidden">
-      {/* <Routes>
-        <Route path="/dashboard" element={<Admin />} />
-      </Routes> */}
+    <div className="row position-relative vh-100 vw-100 overflow-hidden">
       <div className="col-4 vh-100 overflow-hidden">
         <div className="border border-primary rounded-3 position-absolute top-50 start-50 translate-middle p-24">
           <Formik
@@ -43,8 +33,6 @@ const LoginPage = () => {
             validationSchema={loginSchema}
             onSubmit={() => {
               dispatch(loginCheck(form));
-              // navigate("dashboard");
-
               console.log("validUser: " + validUser);
               // setTimeout(() => {
               if (validUser) {

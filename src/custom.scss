@@ -15,6 +15,15 @@ $theme-colors: (
   'damaged-bold': #915761,
   'borrowing': #04C9D7,
   'borrowing-bold': #2B67B1,
+  "grayer": #9ca3af,
+  "report-1": #d1e9fc,
+  "report-1-bold": #061b64,
+  "report-2": #D0F2FF,
+  "report-2-bold": #04297A,
+  "report-3": #FFF7CD,
+  "report-3-bold": #C79B2F,
+  "report-4": #FFE7D9,
+  "report-4-bold": #B72136,
 );
 
 $utilities: (
@@ -57,11 +66,19 @@ $utilities: (
       property: box-shadow,
       class: shadow,
       values: (
-        null: 0 7px 30px 0 hsla(210, 7%, 48%, .11),
+        null: 0 7px 30px 0 rgba(112, 120, 129, 0.11),
         // sm: $box-shadow-sm,
         // lg: $box-shadow-lg,
         card: rgba(0, 0, 0, 0.325) 0px 0px 9px 0px,
         none: none,
+      )
+    ),
+    "line-height": (
+      property: line-height,
+      class: lh,
+      values: (
+        1: 1,
+        sm: 0.85,
       )
     ),
 );
@@ -90,6 +107,7 @@ $utilities: map-merge($utilities,
         values: auto default pointer wait text move help not-allowed),
     ));
     
+$gradient: linear-gradient(270deg, #3f5efb, #fc466b);
 $table-variants: (
   "primary": #B8E8FC,
   "success": #C8FFD4,
@@ -98,7 +116,6 @@ $table-variants: (
 );
 
 $btn-link-hover-color: #fff;
-$box-shadow: 0 7px 30px 0 hsla(210, 7%, 48%, .11); 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 

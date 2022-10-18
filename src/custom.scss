@@ -15,7 +15,7 @@ $theme-colors: (
   'damaged-bold': #915761,
   'borrowing': #04C9D7,
   'borrowing-bold': #2B67B1,
-  "grayer": #9ca3af,
+  "grayer": #C9C9C9,
   "report-1": #d1e9fc,
   "report-1-bold": #061b64,
   "report-2": #D0F2FF,
@@ -24,6 +24,11 @@ $theme-colors: (
   "report-3-bold": #C79B2F,
   "report-4": #FFE7D9,
   "report-4-bold": #B72136,
+  "facebook": #3B5998,
+  "twitter": #55ACEE,
+  "google": #DD4B39,
+  "github": #333333,
+  "discord": #404EED,
 );
 
 $utilities: (
@@ -41,7 +46,9 @@ $utilities: (
     class: h,
     values: (
       32: 32px,
+      50: 50px,
       75: 75px,
+      100: 100px,
       200: 200px,
     
       )),
@@ -78,6 +85,9 @@ $utilities: (
       class: lh,
       values: (
         1: 1,
+        50: 50px,
+        75: 75px,
+        icon: 1.6,
         sm: 0.85,
       )
     ),

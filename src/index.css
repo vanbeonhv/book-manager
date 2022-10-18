@@ -13,3 +13,8 @@ body ::-webkit-scrollbar-thumb {
 body ::-webkit-scrollbar-track {
   background-color: #fff;
 }
+
+.btn:hover {
+  box-shadow: 0 8px 9px -4px rgb(0 0 0 / 15%),
+    0 4px 18px 0 rgb(0 0 0 / 10%);
+}

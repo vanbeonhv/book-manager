@@ -24,7 +24,7 @@ const Students = () => {
   };
 
   return (
-    <div className="">
+    <div className="main-content">
       <div className="text-end">
         <button
           type="button"

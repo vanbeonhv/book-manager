@@ -29,7 +29,7 @@ const EditBorrow = () => {
   const today = new Date().toISOString().slice(0, 10);
   const todayFormatted = moment(today).format("MM/DD/yyyy");
   const [form, setForm] = useState({
-    name: "",
+    studentName: "",
     school: "",
     book: "",
     borrow_date: "",
@@ -74,12 +74,12 @@ const EditBorrow = () => {
         >
           <Form className="d-flex flex-wrap flex-column">
             <label className="form-label text-capitalize" htmlFor="name">
-              name
+              student name
             </label>
             <Field
               name="name"
               type="text"
-              value={form.name || ""}
+              value={form.studentName || ""}
               className="mb-10 form-control"
               disabled
             />

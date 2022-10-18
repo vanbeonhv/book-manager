@@ -3,12 +3,23 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination";
 
 const Books = () => {
   const data = useSelector((state) => state.books.data);
   const requesting = useSelector((state) => state.books.requesting);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage, setBooksPerPage] = useState(5);
+
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  let currentBooks = [{ isbn: "1000" }];
+  if (data) {
+    currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
+  }
+
   useEffect(() => {
     dispatch(loadBooks());
   }, []);
@@ -23,6 +34,9 @@ const Books = () => {
     dispatch(deleteBooks(id, data));
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div className="main-content">
       <div className="text-end">
@@ -53,8 +67,8 @@ const Books = () => {
               <tr>
                 <td>Loading</td>
               </tr>
-            ) : data && data.length ? (
-              data.map((book) => (
+            ) : currentBooks && currentBooks.length ? (
+              currentBooks.map((book) => (
                 <tr key={book.id}>
                   <td className="text-center ">
                     <img src={book.imageS} alt="" className="h-75" />
@@ -92,6 +106,13 @@ const Books = () => {
             )}
           </tbody>
         </table>
+        <div>
+          <Pagination
+            booksPerPage={booksPerPage}
+            totalBooks={data.length || "5"}
+            paginate={paginate}
+          />
+        </div>
       </div>
     </div>
   );

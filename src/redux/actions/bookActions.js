@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import {
   FETCH_BOOKS_REQUEST,
   FETCH_BOOKS_SUCCESS,
@@ -19,11 +20,9 @@ export const loadBooks = () => async (dispatch) => {
   try {
     dispatch({ type: FETCH_BOOKS_REQUEST });
     const url = "http://localhost:3001/api/books";
-    const params = {
-      _start: 35,
-      _limit: 10,
-    };
-    const response = await axios.get(url, { params });
+    // const params = filters;
+    const response = await axios.get(url);
+
     dispatch({
       type: FETCH_BOOKS_SUCCESS,
       payload: response.data,

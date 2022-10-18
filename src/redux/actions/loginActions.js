@@ -5,7 +5,6 @@ export const loginCheck = (payload) => async (dispatch) => {
   const url = "http://localhost:3001/api/login";
   const response = await axios.get(url);
   const { username, password } = payload;
-
   const userData = response.data;
   let userInfo = [];
 

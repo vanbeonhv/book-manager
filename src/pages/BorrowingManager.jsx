@@ -52,7 +52,7 @@ const BorrowingManager = () => {
                 return (
                   <tr key={user.id} className="">
                     {/* {console.log(user.id)} */}
-                    <td>{user.name}</td>
+                    <td>{user.studentName}</td>
                     <td>{user.school}</td>
                     <td>{user.book}</td>
                     <td className="text-center">

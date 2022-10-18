@@ -37,7 +37,7 @@ const AddBorrow = () => {
   const [books, setBooks] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const userURL = "http://localhost:3001/api/users";
+      const userURL = "http://localhost:3001/api/students";
       const universityURL = "http://localhost:3001/api/university";
       const bookURL = "http://localhost:3001/api/books";
 

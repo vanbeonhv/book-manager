@@ -2,7 +2,15 @@ import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../constants/loginConstants";
 
 const initialState = {
   validUser: null,
-  data: "",
+  data: [
+    {
+      username: "",
+      password: "",
+      name: "",
+      img: "",
+      role: "",
+    },
+  ],
 };
 
 const loginReducer = (state = initialState, action) => {

@@ -1,5 +1,6 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteUsers, loadBorrow } from "../redux/actions/borrowActions";
@@ -8,6 +9,17 @@ const BorrowingManager = () => {
   const data = useSelector((state) => state.borrow.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage, setBooksPerPage] = useState(5);
+
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+
+  let currentBorrow = [];
+  if (data) {
+    currentBorrow = data.slice(indexOfFirstBook, indexOfLastBook);
+  }
   useEffect(() => {
     dispatch(loadBorrow());
   }, []);
@@ -20,6 +32,10 @@ const BorrowingManager = () => {
   };
   const handleDelete = (id, data) => {
     dispatch(deleteUsers(id, data));
+  };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -47,33 +63,33 @@ const BorrowingManager = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {data ? (
-              data.map((user) => {
+            {currentBorrow ? (
+              currentBorrow.map((borrow) => {
                 return (
-                  <tr key={user.id} className="">
-                    {/* {console.log(user.id)} */}
-                    <td>{user.studentName}</td>
-                    <td>{user.school}</td>
-                    <td>{user.book}</td>
+                  <tr key={borrow.id} className="">
+                    {/* {console.log(borrow.id)} */}
+                    <td>{borrow.studentName}</td>
+                    <td>{borrow.school}</td>
+                    <td>{borrow.book}</td>
                     <td className="text-center">
                       {
-                        (user.borrow_date = moment(user.borrow_date).format(
+                        (borrow.borrow_date = moment(borrow.borrow_date).format(
                           "MM/DD/yyyy"
                         ))
                       }
                     </td>
                     <td className="text-center">
-                      {user.return_date
-                        ? (user.return_date = moment(user.return_date).format(
-                            "MM/DD/yyyy"
-                          ))
+                      {borrow.return_date
+                        ? (borrow.return_date = moment(
+                            borrow.return_date
+                          ).format("MM/DD/yyyy"))
                         : ""}
                     </td>
                     <td className="text-center">
                       <span
-                        className={`badge rounded-pill d-inline text-capitalize text-white fw-light text-bg-${user.status} `}
+                        className={`badge rounded-pill d-inline text-capitalize text-white fw-light text-bg-${borrow.status} `}
                       >
-                        {user.status}
+                        {borrow.status}
                       </span>
                     </td>
                     <td>
@@ -81,14 +97,14 @@ const BorrowingManager = () => {
                         <button
                           type="button"
                           className="btn btn-secondary m-5 text-white"
-                          onClick={() => handleReturn(user.id)}
+                          onClick={() => handleReturn(borrow.id)}
                         >
                           Return
                         </button>
                         <button
                           type="button"
                           className="btn btn-danger m-5"
-                          onClick={() => handleDelete(user.id, data)}
+                          onClick={() => handleDelete(borrow.id, data)}
                         >
                           Delete
                         </button>
@@ -104,6 +120,14 @@ const BorrowingManager = () => {
             )}
           </tbody>
         </table>
+        <div>
+          <Pagination
+            booksPerPage={booksPerPage}
+            totalBooks={data.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
     </div>
   );

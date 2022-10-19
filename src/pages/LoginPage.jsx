@@ -15,7 +15,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let validUser = useSelector((state) => state.login.validUser);
-  let data = useSelector((state) => state.login.data);
+  let loginInfo = useSelector((state) => state.login.data);
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -30,6 +30,7 @@ const LoginPage = () => {
     if (validUser) {
       alert("login successfully!");
       console.log("Logined");
+      localStorage.setItem("loginTemp", JSON.stringify(loginInfo));
       navigate("dashboard");
     }
   }, [validUser]);

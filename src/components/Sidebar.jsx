@@ -10,8 +10,9 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   let links = [];
   const loginInfo = useSelector((state) => state.login.data);
-  console.log(loginInfo[0].role);
-  if (loginInfo[0].role === "admin" || "") {
+  const loginTemp = JSON.parse(localStorage.getItem("loginTemp"));
+
+  if (loginInfo[0].role === "admin" || loginTemp[0].role === "admin") {
     links = [
       {
         name: "Home",

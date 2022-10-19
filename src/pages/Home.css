@@ -4,3 +4,7 @@
 .bg-cover {
   background-size: cover;
 }
+
+.bg-ads {
+  background: #fff url("https: //dispatch.barnesandnoble.com/content/dam/ccr/homepage/daily/2022/09/06/24392_BB_B_OMP_09-06.jpg") no-repeat center;
+}

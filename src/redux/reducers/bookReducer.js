@@ -18,17 +18,19 @@ const initialState = {
   requesting: false,
   success: false,
   message: null,
-  data: null,
+  data: [],
 };
 
 const bookReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_BOOKS_REQUEST:
+      console.log("1");
       return {
         ...state,
         requesting: true,
       };
     case FETCH_BOOKS_SUCCESS:
+      console.log("2");
       return {
         ...state,
         requesting: false,

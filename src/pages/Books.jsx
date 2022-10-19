@@ -8,6 +8,10 @@ import Pagination from "../components/Pagination";
 const Books = () => {
   const data = useSelector((state) => state.books.data);
   const requesting = useSelector((state) => state.books.requesting);
+  const success = useSelector((state) => state.books.success);
+  const loginInfo = useSelector((state) => state.login.data);
+  const logoutBtn = document.querySelector(".logout");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,12 +19,16 @@ const Books = () => {
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  let currentBooks = [{ isbn: "1000" }];
+  const loginTemp = JSON.parse(localStorage.getItem("loginTemp"));
+
+  let currentBooks = [];
   if (data) {
     currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
   }
-
   useEffect(() => {
+    console.log("requesting: ", requesting);
+    console.log("success: ", success);
+    console.log("data: ", data);
     dispatch(loadBooks());
   }, []);
 
@@ -35,8 +43,10 @@ const Books = () => {
   };
 
   const paginate = (pageNumber) => {
+    console.log("pageNumber: ", pageNumber);
     setCurrentPage(pageNumber);
   };
+
   return (
     <div className="main-content">
       <div className="text-end">
@@ -109,13 +119,13 @@ const Books = () => {
         <div>
           <Pagination
             booksPerPage={booksPerPage}
-            totalBooks={data.length || "5"}
+            totalBooks={data.length}
             paginate={paginate}
+            currentPage={currentPage}
           />
         </div>
       </div>
     </div>
   );
 };
-
 export default Books;

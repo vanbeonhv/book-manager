@@ -22,8 +22,6 @@
   padding-top: 60px;
   padding-bottom: 150px;
   margin-left: 280px;
-  overflow-y: scroll;
-  overflow-x: hidden;
   min-height: 100vh;
   background-color: #F9FAFB;
   /* box-shadow: rgba(0, 0, 0, 0.325) 0px 0px 9px 0px */
@@ -57,8 +55,16 @@
 }
 
 .main-content-responsive {
-  margin: 40px;
+  margin: 0 40px;
 }
+
+@media (max-width: 1080px) {
+  .main-content-responsive {
+    padding-top: 12px;
+    margin: 0 80px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .navbar-custom {
     left: 64px;
@@ -75,12 +81,12 @@
 
 @media (min-width: 1400px){
   .main-content-responsive {
-    margin: 60px;
+    margin: 0 60px;
   }
 }
 
 @media (min-width: 1600px) {
   .main-content-responsive {
-    margin: 80px;
+    margin: 0 80px;
   }
 }

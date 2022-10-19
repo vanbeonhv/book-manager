@@ -18,9 +18,7 @@ import {
 
 export const loadBooks = () => async (dispatch) => {
   try {
-    dispatch({ type: FETCH_BOOKS_REQUEST });
     const url = "http://localhost:3001/api/books";
-    // const params = filters;
     const response = await axios.get(url);
 
     dispatch({
@@ -29,10 +27,6 @@ export const loadBooks = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: FETCH_BOOKS_ERROR,
-      payload: error,
-    });
   }
 };
 

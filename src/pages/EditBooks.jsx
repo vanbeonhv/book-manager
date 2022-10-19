@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,7 @@ const booksSchema = Yup.object().shape({
   isbn: Yup.number().required("Required"),
   title: Yup.string().required("Required"),
   author: Yup.string().required("Required"),
-  publicYear: Yup.number()
+  publishedYear: Yup.number()
     .max(2030, "Must be 2030 or less")
     .required("Required"),
   publisher: Yup.string().required("Required"),
@@ -22,12 +23,21 @@ const EditBooks = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
 
-  useEffect(() => {
-    dispatch(
-      loadEditBooks(id, (res) => {
-        setForm(res.data);
-      })
-    );
+  useEffect((id) => {
+    console.log(id);
+    const loadEditBooks = async (id) => {
+      try {
+        const url = "http://localhost:3001/api/books/" + id;
+        const response = await axios.get(url);
+        console.log(response);
+      } catch {}
+    };
+    loadEditBooks(id);
+    // dispatch(
+    //   loadEditBooks(id, (res) => {
+    //     setForm(res.data);
+    //   })
+    // );
   }, []);
 
   const handleChange = (e) => {
@@ -52,7 +62,7 @@ const EditBooks = () => {
             </label>
             <Field
               name="isbn"
-              type="text"
+              type="number"
               value={form.isbn || ""}
               onChange={handleChange}
               className="mb-10 form-control"
@@ -92,18 +102,18 @@ const EditBooks = () => {
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publicYear">
-              PublicYear
+            <label className="form-label" htmlFor="publishedYear">
+              Published Year
             </label>
             <Field
-              name="publicYear"
-              type="text"
+              name="publishedYear"
+              type="number"
               value={form.publishedYear || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publicYear"
+              name="publishedYear"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
@@ -127,7 +137,7 @@ const EditBooks = () => {
             </label>
             <Field
               name="quantity"
-              type="text"
+              type="number"
               value={form.quantity || ""}
               onChange={handleChange}
               className="mb-10 form-control"

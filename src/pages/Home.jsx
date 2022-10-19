@@ -36,7 +36,7 @@ const Home = () => {
   }, []);
   return (
     <div className="">
-      <div className="row mb-24">
+      <div className="row my-24">
         <div className="col-3 ps-0">
           <div className="rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24">
             <div className=" py-12 text-center">
@@ -115,30 +115,30 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row shadow mt-24">
         <div className="col-12 px-0">
           <img
             src="https://dispatch.barnesandnoble.com/content/dam/ccr/homepage/daily/2022/09/06/24392_BB_B_OMP_09-06.jpg"
             alt=""
-            className="w-100 mt-24 rounded-3"
+            className="w-100 rounded-3"
           />
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-24">
         <div className="col-12 px-0">
           <img
             src="https://dispatch.barnesandnoble.com/content/dam/ccr/homepage/daily/2022/10/18/24859_BB_C_BestBooks_10-18.jpg"
             alt=""
-            className="w-100 mt-24 rounded-3"
+            className="w-100 rounded-3"
           />
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-24">
         <div className="col-12 px-0">
           <img
             src="https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/content/Languages_1112x223_blank.jpg"
             alt=""
-            className="w-100 mt-24 rounded-3"
+            className="w-100 rounded-3"
           />
         </div>
       </div>

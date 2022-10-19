@@ -93,7 +93,7 @@ const BorrowingManager = () => {
                       </span>
                     </td>
                     <td>
-                      <div className="d-flex no-wrap">
+                      <div className="d-flex no-wrap justify-content-center">
                         <button
                           type="button"
                           className="btn btn-secondary m-5 text-white"
@@ -120,14 +120,14 @@ const BorrowingManager = () => {
             )}
           </tbody>
         </table>
-        <div>
+        {/* <div>
           <Pagination
             booksPerPage={booksPerPage}
             totalBooks={data.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

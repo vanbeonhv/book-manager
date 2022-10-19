@@ -57,7 +57,7 @@ const Students = () => {
                   <td>{book.phone_number}</td>
                   <td className="text-center">{book.city}</td>
                   <td>
-                    <div className="d-flex no-wrap">
+                    <div className="d-flex no-wrap justify-content-center">
                       <button
                         type="button"
                         className="btn btn-success m-5 text-white"

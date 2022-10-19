@@ -7,8 +7,6 @@ import Pagination from "../components/Pagination";
 
 const Books = () => {
   const data = useSelector((state) => state.books.data);
-  const requesting = useSelector((state) => state.books.requesting);
-  const success = useSelector((state) => state.books.success);
   const loginInfo = useSelector((state) => state.login.data);
   const logoutBtn = document.querySelector(".logout");
 
@@ -26,9 +24,6 @@ const Books = () => {
     currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
   }
   useEffect(() => {
-    console.log("requesting: ", requesting);
-    console.log("success: ", success);
-    console.log("data: ", data);
     dispatch(loadBooks());
   }, []);
 
@@ -43,7 +38,6 @@ const Books = () => {
   };
 
   const paginate = (pageNumber) => {
-    console.log("pageNumber: ", pageNumber);
     setCurrentPage(pageNumber);
   };
 
@@ -73,15 +67,17 @@ const Books = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider align-middle">
-            {requesting ? (
-              <tr>
-                <td>Loading</td>
-              </tr>
-            ) : currentBooks && currentBooks.length ? (
+            {currentBooks && currentBooks.length ? (
               currentBooks.map((book) => (
                 <tr key={book.id}>
                   <td className="text-center ">
-                    <img src={book.imageS} alt="" className="h-75" />
+                    <object
+                      data="https://i.pinimg.com/564x/5f/60/36/5f6036ea0bccb9c6ac28ab6d7844297d.jpg"
+                      type="image/png"
+                      className="h-75"
+                    >
+                      <img src={book.imageS} alt="" className="h-75" />
+                    </object>
                   </td>
                   <td>{book.isbn}</td>
                   <td>{book.title}</td>
@@ -90,7 +86,7 @@ const Books = () => {
                   <td className="text-center">{book.publishedYear}</td>
                   <td className="text-center">{book.quantity}</td>
                   <td>
-                    <div className="d-flex no-wrap">
+                    <div className="d-flex no-wrap justify-content-center">
                       <button
                         type="button"
                         className="btn btn-success m-5 text-white"

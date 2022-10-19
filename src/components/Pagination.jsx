@@ -4,9 +4,7 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
   // const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalBooks / booksPerPage);
   const pageNumbers = [];
-  const activePage = [];
-  console.log(activePage);
-
+  const [activePage, setActivePage] = useState(1);
   let prevDisable = "";
   let nextDisable = "";
   let isActive = "";
@@ -19,12 +17,10 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-  for (let i = 0; i <= totalPages; i++) {
-    activePage.push("");
-  }
+
   return (
-    <nav className="float-end">
-      <ul className="pagination">
+    <nav className="">
+      <ul className="pagination justify-content-end">
         <li className={`page-item ${prevDisable}`}>
           <a
             onClick={() => {
@@ -36,13 +32,14 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
           </a>
         </li>
         {pageNumbers.map((number) => (
-          <li key={number} className={`page-item ${activePage[number + 1]}`}>
+          <li
+            key={number}
+            className={number === activePage ? "page-item active" : "page-item"}
+          >
             <a
               onClick={() => {
-                console.log("number ", number);
+                setActivePage(number);
                 paginate(number);
-                activePage[number + 1] = "active";
-                console.log("currentPage ", currentPage);
               }}
               className={"page-link cursor-default user-select-none"}
             >

@@ -25,6 +25,7 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
           <a
             onClick={() => {
               paginate(currentPage - 1);
+              console.log(currentPage - 1);
             }}
             className="page-link cursor-default user-select-none"
           >

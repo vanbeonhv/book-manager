@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
+import CustomImage from "../components/CustomImage";
 
 const Books = () => {
   const data = useSelector((state) => state.books.data);
@@ -71,13 +72,14 @@ const Books = () => {
               currentBooks.map((book) => (
                 <tr key={book.id}>
                   <td className="text-center ">
-                    <object
-                      data="https://i.pinimg.com/564x/5f/60/36/5f6036ea0bccb9c6ac28ab6d7844297d.jpg"
+                    {/* <img
+                      src={book.imageS}
                       type="image/png"
+                      alt=""
+                      onerror={(this.src = "http:///i.imgur.com/hfM1J8s.png")}
                       className="h-75"
-                    >
-                      <img src={book.imageS} alt="" className="h-75" />
-                    </object>
+                    /> */}
+                    <CustomImage className={"h-75"} src={book.imageS} />
                   </td>
                   <td>{book.isbn}</td>
                   <td>{book.title}</td>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../constants/loginConstants";
 
 export const loginCheck = (payload) => async (dispatch) => {
@@ -24,7 +25,13 @@ export const loginCheck = (payload) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
-    alert("Invalid username or password");
+    const loginFail = () =>
+      toast.error("Invalid username or password!", {
+        position: toast.POSITION.TOP_LEFT,
+        autoClose: 1000,
+        theme: "colored",
+      });
+    loginFail();
   }
 };
 

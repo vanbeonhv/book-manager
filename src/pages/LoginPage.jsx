@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { loginCheck } from "../redux/actions/loginActions";
 import Admin from "../users/Admin";
@@ -28,12 +29,19 @@ const LoginPage = () => {
   };
   useEffect(() => {
     if (validUser) {
-      alert("login successfully!");
-      console.log("Logined");
+      // alert("login successfully!");
+      loginSuccess();
       localStorage.setItem("loginTemp", JSON.stringify(loginInfo));
       navigate("dashboard");
     }
   }, [validUser]);
+
+  const loginSuccess = () =>
+    toast.success("Login Success!", {
+      position: toast.POSITION.TOP_LEFT,
+      autoClose: 1500,
+      theme: "colored",
+    });
   return (
     <div className="row position-relative vh-100 vw-100 overflow-hidden">
       <div className="col-4 vh-100 overflow-hidden">
@@ -78,7 +86,10 @@ const LoginPage = () => {
                 className="text-danger fs-6 fst-italic"
               />
               <div className="text-center pt-24">
-                <button type="submit" className="btn btn-primary text-white">
+                <button
+                  type="submit"
+                  className="btn btn-primary text-white loginBtn"
+                >
                   Login
                 </button>
               </div>

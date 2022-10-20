@@ -6,10 +6,10 @@ import * as Yup from "yup";
 import moment from "moment/moment";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { addBorrow } from "../redux/actions/borrowActions";
+import { toast, Zoom } from "react-toastify";
 
 const booksSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
+  studentName: Yup.string().required("Required"),
   school: Yup.string().required("Required"),
   book: Yup.string().required("Required"),
   borrow_date: Yup.date().required("Required"),
@@ -24,7 +24,7 @@ const AddBorrow = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: "",
+    studentName: "",
     school: "",
     book: "",
     borrow_date: todayFormatted,
@@ -64,7 +64,21 @@ const AddBorrow = () => {
     setForm({ ...form, borrow_date: today, [e.target.name]: e.target.value });
     console.log(form);
   };
+  const addSuccess = () =>
+    toast.success("Add successfully!", {
+      position: toast.POSITION.TOP_LEFT,
+      autoClose: 1000,
+      theme: "colored",
+      transition: Zoom,
+    });
 
+  const addFail = () =>
+    toast.error("Add fail!", {
+      position: toast.POSITION.TOP_LEFT,
+      autoClose: 1000,
+      theme: "colored",
+      transition: Zoom,
+    });
   return (
     <div className="row">
       <div className="col-3"></div>
@@ -73,27 +87,33 @@ const AddBorrow = () => {
           initialValues={form}
           enableReinitialize={true}
           validationSchema={booksSchema}
-          onSubmit={() => {
-            dispatch(addBorrow(form));
-            alert("add successfully!");
-            setForm({
-              name: "",
-              school: "",
-              book: "",
-              borrow_date: todayFormatted,
-              return_date: "",
-              status: "borrowing",
-            });
+          onSubmit={async () => {
+            try {
+              const addUrl = "http://localhost:3001/api/borrow";
+              await axios.post(addUrl, form);
+              addSuccess();
+              setForm({
+                studentName: "",
+                school: "",
+                book: "",
+                borrow_date: todayFormatted,
+                return_date: "",
+                status: "borrowing",
+              });
+            } catch (error) {
+              console.log(error);
+              addFail();
+            }
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
-            <label className="form-label text-capitalize" htmlFor="name">
-              name
+            <label className="form-label text-capitalize" htmlFor="studentName">
+              student name
             </label>
             <Field
-              name="name"
+              name="studentName"
               as="select"
-              value={form.name || ""}
+              value={form.studentName || ""}
               onChange={handleChange}
               className="mb-10 form-select"
             >

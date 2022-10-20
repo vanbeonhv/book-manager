@@ -6,19 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
 import * as Yup from "yup";
 
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const booksSchema = Yup.object().shape({
-  isbn: Yup.number()
-    .min(100000000, "Must be 9 numbers at least")
-    .max(999999999999, "Must be 12 numbers or less")
-    .required("Required"),
-  title: Yup.string().required("Required"),
-  author: Yup.string().required("Required"),
-  publishedYear: Yup.number()
-    .max(2022, "Still 2022 bro???")
-    .min(1970, "Must be 1970 at least")
-    .required("Required"),
-  publisher: Yup.string().required("Required"),
-  quantity: Yup.number().max(100).required("Required"),
+  name: Yup.string().required("Required"),
+  school: Yup.string().required("Required"),
+  email: Yup.string().email().required("Required"),
+  phone_number: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
+  city: Yup.string().required("Required"),
 });
 const addSuccess = () =>
   toast.success("Add successfully!", {
@@ -35,17 +30,16 @@ const addFail = () =>
     theme: "colored",
     transition: Zoom,
   });
-const AddBooks = () => {
+const AddStudents = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    isbn: "",
-    title: "",
-    author: "",
+    name: "",
+    school: "",
+    email: "",
     publicYear: "",
-    publisher: "",
-    quantity: "",
+    city: "",
   });
 
   const handleChange = (e) => {
@@ -63,17 +57,16 @@ const AddBooks = () => {
           validationSchema={booksSchema}
           onSubmit={async () => {
             try {
-              const addUrl = "http://localhost:3001/api/books/";
+              const addUrl = "http://localhost:3001/api/students/";
               await axios.post(addUrl, form);
               console.log(form);
               addSuccess();
               setForm({
-                isbn: "",
-                title: "",
-                author: "",
+                name: "",
+                school: "",
+                email: "",
                 publicYear: "",
-                publisher: "",
-                quantity: "",
+                city: "",
               });
             } catch (error) {
               addFail();
@@ -82,93 +75,81 @@ const AddBooks = () => {
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
-            <label className="form-label" htmlFor="isbn">
-              ISBN
+            <label className="form-label text-capitalize" htmlFor="name">
+              name
             </label>
             <Field
-              name="isbn"
-              type="number"
-              value={form.isbn || ""}
-              onChange={handleChange}
-              className="mb-10 form-control"
-            />
-            <ErrorMessage
-              name="isbn"
-              component="div"
-              className="text-danger fs-6 fst-italic"
-            />
-            <label className="form-label" htmlFor="title">
-              Title
-            </label>
-            <Field
-              name="title"
+              name="name"
               type="text"
-              value={form.title || ""}
+              value={form.name || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="title"
+              name="name"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="author">
-              Author
+            <label className="form-label text-capitalize" htmlFor="school">
+              school
             </label>
             <Field
-              name="author"
+              name="school"
               type="text"
-              value={form.author || ""}
+              value={form.school || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="author"
+              name="school"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publishedYear">
-              Published Year
+            <label className="form-label text-capitalize" htmlFor="email">
+              email
             </label>
             <Field
-              name="publishedYear"
+              name="email"
+              type="email"
+              value={form.email || ""}
+              onChange={handleChange}
+              className="mb-10 form-control"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-danger fs-6 fst-italic"
+            />
+            <label
+              className="form-label text-capitalize"
+              htmlFor="phone_number"
+            >
+              Phone Number
+            </label>
+            <Field
+              name="phone_number"
               type="number"
-              value={form.publishedYear || ""}
+              value={form.phone_number || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publishedYear"
+              name="phone_number"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publisher">
-              Publisher
+            <label className="form-label text-capitalize" htmlFor="city">
+              city
             </label>
             <Field
-              name="publisher"
+              name="city"
               type="text"
-              value={form.publisher || ""}
+              value={form.city || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publisher"
-              component="div"
-              className="text-danger fs-6 fst-italic"
-            />
-            <label className="form-label" htmlFor="publisher">
-              Quantity
-            </label>
-            <Field
-              name="quantity"
-              type="number"
-              value={form.quantity || ""}
-              onChange={handleChange}
-              className="mb-10 form-control"
-            />
-            <ErrorMessage
-              name="quantity"
+              name="city"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
@@ -185,4 +166,4 @@ const AddBooks = () => {
   );
 };
 
-export default AddBooks;
+export default AddStudents;

@@ -5,11 +5,17 @@ import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import CustomImage from "../components/CustomImage";
+import { Flip, toast } from "react-toastify";
 
+const deleteSuccess = () =>
+  toast.success("Deleted!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1000,
+    theme: "colored",
+    transition: Flip,
+  });
 const Books = () => {
   const data = useSelector((state) => state.books.data);
-  const loginInfo = useSelector((state) => state.login.data);
-  const logoutBtn = document.querySelector(".logout");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,9 +24,9 @@ const Books = () => {
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const loginTemp = JSON.parse(localStorage.getItem("loginTemp"));
 
   let currentBooks = [];
+  console.log(data);
   if (data) {
     currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
   }
@@ -36,6 +42,7 @@ const Books = () => {
   };
   const handleDelete = (id, data) => {
     dispatch(deleteBooks(id, data));
+    deleteSuccess();
   };
 
   const paginate = (pageNumber) => {
@@ -72,13 +79,6 @@ const Books = () => {
               currentBooks.map((book) => (
                 <tr key={book.id}>
                   <td className="text-center ">
-                    {/* <img
-                      src={book.imageS}
-                      type="image/png"
-                      alt=""
-                      onerror={(this.src = "http:///i.imgur.com/hfM1J8s.png")}
-                      className="h-75"
-                    /> */}
                     <CustomImage className={"h-75"} src={book.imageS} />
                   </td>
                   <td>{book.isbn}</td>

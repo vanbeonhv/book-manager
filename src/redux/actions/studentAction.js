@@ -3,13 +3,22 @@ import { DELETE_STUDENTS, FETCH_STUDENTS } from "../constants/studentConstants";
 
 export const loadStudents = () => async (dispatch) => {
   const url = "http://localhost:3001/api/students";
-  const params = {
-    _start: 35,
-    _limit: 10,
-  };
-  const response = await axios.get(url, { params });
+  const response = await axios.get(url);
   dispatch({
     type: FETCH_STUDENTS,
     payload: response.data,
   });
+};
+
+export const deleteStudents = (payloadId, payloadData) => async (dispatch) => {
+  try {
+    const url = "http://localhost:3001/api/students/" + payloadId;
+    await axios.delete(url);
+    dispatch({
+      type: DELETE_STUDENTS,
+      payload: { payloadId, payloadData },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

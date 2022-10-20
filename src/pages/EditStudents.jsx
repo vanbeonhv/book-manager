@@ -1,58 +1,50 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast, Zoom } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 import * as Yup from "yup";
+import { editBooks, loadEditBooks } from "../redux/actions/bookActions";
 
 const booksSchema = Yup.object().shape({
-  isbn: Yup.number()
-    .min(100000000, "Must be 9 numbers at least")
-    .max(999999999999, "Must be 12 numbers or less")
-    .required("Required"),
+  isbn: Yup.number().required("Required"),
   title: Yup.string().required("Required"),
   author: Yup.string().required("Required"),
   publishedYear: Yup.number()
-    .max(2022, "Still 2022 bro???")
-    .min(1970, "Must be 1970 at least")
+    .max(2030, "Must be 2030 or less")
     .required("Required"),
   publisher: Yup.string().required("Required"),
   quantity: Yup.number().max(100).required("Required"),
 });
-const addSuccess = () =>
-  toast.success("Add successfully!", {
+const editSuccess = () =>
+  toast.success("Edited!", {
     position: toast.POSITION.TOP_LEFT,
     autoClose: 1000,
     theme: "colored",
-    transition: Zoom,
+    transition: Slide,
   });
 
-const addFail = () =>
-  toast.error("Add fail!", {
-    position: toast.POSITION.TOP_LEFT,
-    autoClose: 1000,
-    theme: "colored",
-    transition: Zoom,
-  });
-const AddBooks = () => {
+const EditStudents = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    isbn: "",
-    title: "",
-    author: "",
-    publicYear: "",
-    publisher: "",
-    quantity: "",
-  });
+  const [form, setForm] = useState({});
+  useEffect(() => {
+    const loadEditBooks = async (id) => {
+      try {
+        const url = "http://localhost:3001/api/books/" + id;
+        const response = await axios.get(url);
+        setForm(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadEditBooks(id);
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log(form);
   };
-
   return (
     <div className="row">
       <div className="col-3"></div>
@@ -62,23 +54,9 @@ const AddBooks = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={async () => {
-            try {
-              const addUrl = "http://localhost:3001/api/books/";
-              await axios.post(addUrl, form);
-              console.log(form);
-              addSuccess();
-              setForm({
-                isbn: "",
-                title: "",
-                author: "",
-                publicYear: "",
-                publisher: "",
-                quantity: "",
-              });
-            } catch (error) {
-              addFail();
-              console.log(error);
-            }
+            const editUrl = "http://localhost:3001/api/books/" + id;
+            await axios.put(editUrl, form);
+            editSuccess();
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
@@ -185,4 +163,4 @@ const AddBooks = () => {
   );
 };
 
-export default AddBooks;
+export default EditStudents;

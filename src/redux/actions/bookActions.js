@@ -1,19 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import {
-  FETCH_BOOKS_REQUEST,
   FETCH_BOOKS_SUCCESS,
-  FETCH_BOOKS_ERROR,
-  POST_BOOKS_REQUEST,
-  POST_BOOKS_SUCCESS,
-  POST_BOOKS_ERROR,
-  DELETE_BOOKS_REQUEST,
   DELETE_BOOKS_SUCCESS,
-  DELETE_BOOKS_ERROR,
-  FETCH_EDIT_BOOKS_REQUEST,
-  EDIT_BOOKS_REQUEST,
-  EDIT_BOOKS_SUCCESS,
-  EDIT_BOOKS_ERROR,
 } from "../constants/bookConstants";
 
 export const loadBooks = () => async (dispatch) => {
@@ -30,26 +19,8 @@ export const loadBooks = () => async (dispatch) => {
   }
 };
 
-export const addBooks = (payload) => async (dispatch) => {
-  try {
-    dispatch({ type: POST_BOOKS_REQUEST });
-    const url = "http://localhost:3001/api/books/";
-    await axios.post(url, payload);
-    dispatch({
-      type: POST_BOOKS_SUCCESS,
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: POST_BOOKS_ERROR,
-      payload: error,
-    });
-  }
-};
-
 export const deleteBooks = (payloadId, payloadData) => async (dispatch) => {
   try {
-    dispatch({ type: DELETE_BOOKS_REQUEST });
     const url = "http://localhost:3001/api/books/" + payloadId;
     await axios.delete(url);
     dispatch({
@@ -58,36 +29,5 @@ export const deleteBooks = (payloadId, payloadData) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: DELETE_BOOKS_ERROR,
-      payload: error,
-    });
-  }
-};
-
-export const loadEditBooks = (payloadId, payloadCb) => async (dispatch) => {
-  dispatch({ type: FETCH_EDIT_BOOKS_REQUEST });
-  const url = "http://localhost:3001/api/books/" + payloadId;
-  const response = await axios.get(url);
-  payloadCb(response);
-};
-
-export const editBooks = (payloadId, payloadData) => async (dispatch) => {
-  try {
-    // console.log(payload);
-    dispatch({ type: EDIT_BOOKS_REQUEST });
-    const url = "http://localhost:3001/api/books/" + payloadId;
-    const response = await axios.put(url, payloadData);
-    console.log(response);
-    dispatch({
-      type: EDIT_BOOKS_SUCCESS,
-      payload: response.data,
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: EDIT_BOOKS_ERROR,
-      payload: error,
-    });
   }
 };

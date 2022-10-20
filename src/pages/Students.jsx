@@ -1,14 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
-import { loadStudents } from "../redux/actions/studentAction";
+import Pagination from "../components/Pagination";
+import { deleteStudents, loadStudents } from "../redux/actions/studentAction";
+import { Flip, toast } from "react-toastify";
 
+const deleteSuccess = () =>
+  toast.success("Deleted!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1000,
+    theme: "colored",
+    transition: Flip,
+  });
 const Students = () => {
   const data = useSelector((state) => state.student.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage, setBooksPerPage] = useState(7);
+
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+
+  let currentStudents = [];
+  if (data) {
+    currentStudents = data.slice(indexOfFirstBook, indexOfLastBook);
+  }
   useEffect(() => {
     dispatch(loadStudents());
   }, []);
@@ -20,9 +39,12 @@ const Students = () => {
     navigate("edit/" + id);
   };
   const handleDelete = (id, data) => {
-    dispatch(deleteBooks(id, data));
+    dispatch(deleteStudents(id, data));
+    deleteSuccess();
   };
-
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div className="main-content">
       <div className="text-end">
@@ -30,7 +52,6 @@ const Students = () => {
           type="button"
           className="btn btn-primary m-10 text-white"
           onClick={handleAdd}
-          disabled
         >
           Add
         </button>
@@ -48,8 +69,8 @@ const Students = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider align-middle">
-            {data && data.length ? (
-              data.map((book) => (
+            {currentStudents && currentStudents.length ? (
+              currentStudents.map((book) => (
                 <tr key={book.id}>
                   <td>{book.name}</td>
                   <td>{book.school}</td>
@@ -62,7 +83,6 @@ const Students = () => {
                         type="button"
                         className="btn btn-success m-5 text-white"
                         onClick={() => handleEdit(book.id)}
-                        disabled
                       >
                         Edit
                       </button>
@@ -70,7 +90,6 @@ const Students = () => {
                         type="button"
                         className="btn btn-danger m-5"
                         onClick={() => handleDelete(book.id, data)}
-                        disabled
                       >
                         Delete
                       </button>
@@ -85,6 +104,14 @@ const Students = () => {
             )}
           </tbody>
         </table>
+        <div>
+          <Pagination
+            booksPerPage={booksPerPage}
+            totalBooks={data.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
     </div>
   );

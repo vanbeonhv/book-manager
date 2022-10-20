@@ -1,10 +1,18 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUsers, loadBorrow } from "../redux/actions/borrowActions";
+import { deleteBorrow, loadBorrow } from "../redux/actions/borrowActions";
+import Pagination from "../components/Pagination";
+import { Flip, toast } from "react-toastify";
 
+const deleteSuccess = () =>
+  toast.success("Deleted!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1000,
+    theme: "colored",
+    transition: Flip,
+  });
 const BorrowingManager = () => {
   const data = useSelector((state) => state.borrow.data);
   const navigate = useNavigate();
@@ -31,7 +39,8 @@ const BorrowingManager = () => {
     navigate("return/" + id);
   };
   const handleDelete = (id, data) => {
-    dispatch(deleteUsers(id, data));
+    dispatch(deleteBorrow(id, data));
+    deleteSuccess();
   };
 
   const paginate = (pageNumber) => {
@@ -120,14 +129,14 @@ const BorrowingManager = () => {
             )}
           </tbody>
         </table>
-        {/* <div>
+        <div>
           <Pagination
             booksPerPage={booksPerPage}
             totalBooks={data.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );

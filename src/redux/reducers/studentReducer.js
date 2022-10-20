@@ -1,14 +1,12 @@
 import { DELETE_STUDENTS, FETCH_STUDENTS } from "../constants/studentConstants";
 
 const initialState = {
-  data: "",
-  message: "",
+  data: [],
 };
 
 const studentReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_STUDENTS:
-      // console.log(action.payload);
       return {
         ...state,
         data: action.payload,

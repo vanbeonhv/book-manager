@@ -3,6 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 import * as Yup from "yup";
 import { editBooks, loadEditBooks } from "../redux/actions/bookActions";
 
@@ -16,28 +17,29 @@ const booksSchema = Yup.object().shape({
   publisher: Yup.string().required("Required"),
   quantity: Yup.number().max(100).required("Required"),
 });
+const editSuccess = () =>
+  toast.success("Edited!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1000,
+    theme: "colored",
+    transition: Slide,
+  });
 
 const EditBooks = () => {
   const { id } = useParams();
-  const data = useSelector((state) => state.books.data);
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
-
-  useEffect((id) => {
-    console.log(id);
+  useEffect(() => {
     const loadEditBooks = async (id) => {
       try {
         const url = "http://localhost:3001/api/books/" + id;
         const response = await axios.get(url);
-        console.log(response);
-      } catch {}
+        setForm(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     loadEditBooks(id);
-    // dispatch(
-    //   loadEditBooks(id, (res) => {
-    //     setForm(res.data);
-    //   })
-    // );
   }, []);
 
   const handleChange = (e) => {
@@ -51,9 +53,10 @@ const EditBooks = () => {
           initialValues={form}
           enableReinitialize={true}
           validationSchema={booksSchema}
-          onSubmit={() => {
-            dispatch(editBooks(id, form));
-            alert("Edit successfully!");
+          onSubmit={async () => {
+            const editUrl = "http://localhost:3001/api/books/" + id;
+            await axios.put(editUrl, form);
+            editSuccess();
           }}
         >
           <Form className="d-flex flex-wrap flex-column">

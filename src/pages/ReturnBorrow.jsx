@@ -1,19 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { loadBooks } from "../redux/actions/bookActions";
 import moment from "moment/moment";
-import {
-  addUsers,
-  editUsers,
-  loadEditUsers,
-  loadUniversities,
-} from "../redux/actions/borrowActions";
 import axios from "axios";
+import { Slide, toast } from "react-toastify";
 
-const booksSchema = Yup.object().shape({
+const returnSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   school: Yup.string().required("Required"),
   book: Yup.string().required("Required"),
@@ -22,7 +16,15 @@ const booksSchema = Yup.object().shape({
   status: Yup.string().required("Required"),
 });
 
-const EditBorrow = () => {
+const returnSuccess = () =>
+  toast.success("Return successfully!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1000,
+    theme: "colored",
+    transition: Slide,
+  });
+
+const ReturnBorrow = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const EditBorrow = () => {
     school: "",
     book: "",
     borrow_date: "",
-    return_date: "",
+    return_date: today,
     status: "",
   });
 
@@ -54,11 +56,20 @@ const EditBorrow = () => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
-      return_date: todayFormatted,
+      return_date: today,
     });
     console.log(form);
   };
 
+  const handleSubmit = async () => {
+    try {
+      const returnUrl = "http://localhost:3001/api/borrow/" + id;
+      await axios.put(returnUrl, form);
+      returnSuccess();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="row">
       <div className="col-3"></div>
@@ -66,25 +77,24 @@ const EditBorrow = () => {
         <Formik
           initialValues={form}
           enableReinitialize={true}
-          validationSchema={booksSchema}
-          onSubmit={() => {
-            dispatch(editUsers(id, form));
-            alert("edit successfully!");
+          validationSchema={returnSchema}
+          onSubmit={async () => {
+            console.log("test 2");
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
-            <label className="form-label text-capitalize" htmlFor="name">
+            <label className="form-label text-capitalize" htmlFor="studentName">
               student name
             </label>
             <Field
-              name="name"
+              name="studentName"
               type="text"
               value={form.studentName || ""}
               className="mb-10 form-control"
               disabled
             />
             <ErrorMessage
-              name="name"
+              name="studentName"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
@@ -165,8 +175,12 @@ const EditBorrow = () => {
               className="text-danger fs-6 fst-italic"
             />
             <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-primary text-white">
-                Submit
+              <button
+                type="submit"
+                className="btn btn-primary text-white"
+                onClick={handleSubmit}
+              >
+                Return
               </button>
             </div>
           </Form>
@@ -177,4 +191,4 @@ const EditBorrow = () => {
   );
 };
 
-export default EditBorrow;
+export default ReturnBorrow;

@@ -11,7 +11,12 @@ const loginSchema = Yup.object().shape({
   username: Yup.string().required("Username required"),
   password: Yup.string().required("Password required"),
 });
-let n = 0;
+const loginSuccess = () =>
+  toast.success("Login Success!", {
+    position: toast.POSITION.TOP_LEFT,
+    autoClose: 1500,
+    theme: "colored",
+  });
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,12 +41,6 @@ const LoginPage = () => {
     }
   }, [validUser]);
 
-  const loginSuccess = () =>
-    toast.success("Login Success!", {
-      position: toast.POSITION.TOP_LEFT,
-      autoClose: 1500,
-      theme: "colored",
-    });
   return (
     <div className="row position-relative vh-100 vw-100 overflow-hidden">
       <div className="col-4 vh-100 overflow-hidden">

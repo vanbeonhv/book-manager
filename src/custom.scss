@@ -13,7 +13,7 @@ $theme-colors: (
   'old-bold': #73510D,
   'damaged': #FF5C8E,
   'damaged-bold': #915761,
-  'borrowing': #04C9D7,
+  'borrowing': #18d6e4,
   'borrowing-bold': #2B67B1,
   "grayer": #C9C9C9,
   "report-1": #d1e9fc,
@@ -91,7 +91,15 @@ $utilities: (
         sm: 0.85,
       )
     ),
+    "top": (
+      property: top,
+      values: (0: 0,
+        50: 50%,
+        25: 25%,
+        100: 100%)
+    ),
 );
+
 $spacer: 0.0625rem;
 $spacers: (
   0: 0,
@@ -105,6 +113,7 @@ $spacers: (
   12: $spacer * 12,
   16: $spacer * 16,
   24: $spacer * 24,
+  25: 25%,
   32: $spacer * 32,
   40: $spacer * 40,
   48: $spacer * 48,

@@ -26,7 +26,6 @@ const Books = () => {
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
   let currentBooks = [];
-  console.log(data);
   if (data) {
     currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
   }

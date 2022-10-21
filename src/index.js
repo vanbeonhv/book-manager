@@ -4,12 +4,10 @@ import "./custom.scss";
 import "./index.css";
 // import App from "./App";
 import store from "./redux/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import Admin from "./users/Admin";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Books from "./pages/Books";
-import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

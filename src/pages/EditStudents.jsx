@@ -7,15 +7,14 @@ import { Slide, toast } from "react-toastify";
 import * as Yup from "yup";
 import { editBooks, loadEditBooks } from "../redux/actions/bookActions";
 
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const booksSchema = Yup.object().shape({
-  isbn: Yup.number().required("Required"),
-  title: Yup.string().required("Required"),
-  author: Yup.string().required("Required"),
-  publishedYear: Yup.number()
-    .max(2030, "Must be 2030 or less")
-    .required("Required"),
-  publisher: Yup.string().required("Required"),
-  quantity: Yup.number().max(100).required("Required"),
+  name: Yup.string().required("Required"),
+  school: Yup.string().required("Required"),
+  email: Yup.string().email().required("Required"),
+  phone_number: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
+  city: Yup.string().required("Required"),
 });
 const editSuccess = () =>
   toast.success("Edited!", {
@@ -30,23 +29,23 @@ const EditStudents = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
   useEffect(() => {
-    const loadEditBooks = async (id) => {
+    const loadEditStudent = async (id) => {
       try {
-        const url = "http://localhost:3001/api/books/" + id;
+        const url = "http://localhost:3001/api/students/" + id;
         const response = await axios.get(url);
         setForm(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    loadEditBooks(id);
+    loadEditStudent(id);
   }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   return (
-    <div className="row">
+    <div className="row mt-48">
       <div className="col-3"></div>
       <div className="col-6 border border-primary rounded-3 p-24">
         <Formik
@@ -54,99 +53,87 @@ const EditStudents = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={async () => {
-            const editUrl = "http://localhost:3001/api/books/" + id;
+            const editUrl = "http://localhost:3001/api/students/" + id;
             await axios.put(editUrl, form);
             editSuccess();
           }}
         >
           <Form className="d-flex flex-wrap flex-column">
-            <label className="form-label" htmlFor="isbn">
-              ISBN
+            <label className="form-label text-capitalize" htmlFor="name">
+              name
             </label>
             <Field
-              name="isbn"
-              type="number"
-              value={form.isbn || ""}
+              name="name"
+              type="name"
+              value={form.name || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="isbn"
+              name="name"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="title">
-              Title
+            <label className="form-label text-capitalize" htmlFor="school">
+              school
             </label>
             <Field
-              name="title"
+              name="school"
               type="text"
-              value={form.title || ""}
+              value={form.school || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="title"
+              name="school"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="author">
-              Author
+            <label className="form-label text-capitalize" htmlFor="email">
+              email
             </label>
             <Field
-              name="author"
+              name="email"
               type="text"
-              value={form.author || ""}
+              value={form.email || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="author"
+              name="email"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publishedYear">
-              Published Year
+            <label
+              className="form-label text-capitalize"
+              htmlFor="phone_number"
+            >
+              phone number
             </label>
             <Field
-              name="publishedYear"
+              name="phone_number"
               type="number"
-              value={form.publishedYear || ""}
+              value={form.phone_number || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publishedYear"
+              name="phone_number"
               component="div"
               className="text-danger fs-6 fst-italic"
             />
-            <label className="form-label" htmlFor="publisher">
-              Publisher
+            <label className="form-label text-capitalize" htmlFor="city">
+              city
             </label>
             <Field
-              name="publisher"
+              name="city"
               type="text"
-              value={form.publisher || ""}
+              value={form.city || ""}
               onChange={handleChange}
               className="mb-10 form-control"
             />
             <ErrorMessage
-              name="publisher"
-              component="div"
-              className="text-danger fs-6 fst-italic"
-            />
-            <label className="form-label" htmlFor="publisher">
-              Quantity
-            </label>
-            <Field
-              name="quantity"
-              type="number"
-              value={form.quantity || ""}
-              onChange={handleChange}
-              className="mb-10 form-control"
-            />
-            <ErrorMessage
-              name="quantity"
+              name="city"
               component="div"
               className="text-danger fs-6 fst-italic"
             />

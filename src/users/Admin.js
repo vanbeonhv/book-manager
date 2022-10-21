@@ -12,6 +12,7 @@ import AddBorrow from "../pages/AddBorrow";
 import Report from "../pages/Report";
 import ReturnBorrow from "../pages/ReturnBorrow";
 import AddStudents from "../pages/AddStudents";
+import EditStudents from "../pages/EditStudents";
 
 const Admin = () => {
   return (

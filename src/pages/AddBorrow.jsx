@@ -80,7 +80,7 @@ const AddBorrow = () => {
       transition: Zoom,
     });
   return (
-    <div className="row">
+    <div className="row mt-48">
       <div className="col-3"></div>
       <div className="col-6 border border-primary rounded-3 p-24">
         <Formik

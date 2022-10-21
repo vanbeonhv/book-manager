@@ -1,25 +1,108 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { IoBookSharp } from "react-icons/io5";
+import { AiOutlineUser } from "react-icons/ai";
+import { BiTransferAlt } from "react-icons/bi";
+import { BsDownload } from "react-icons/bs";
+import axios from "axios";
 const Report = () => {
+  const [totalUser, setTotalUser] = useState([]);
+  const [borrow, setBorrow] = useState([]);
+  const [totalBook, setTotalBook] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const userURL = "http://localhost:3001/api/students";
+      const borrowURL = "http://localhost:3001/api/borrow";
+      const bookURL = "http://localhost:3001/api/books";
+
+      const responses = await Promise.all([
+        axios.get(userURL),
+        axios.get(borrowURL),
+        axios.get(bookURL),
+      ]).catch((err) => {
+        throw err;
+      });
+      const userData = await responses[0].data;
+      const borrowData = await responses[1].data;
+      const bookData = await responses[2].data;
+      setTotalUser(userData.length);
+      setBorrow(borrowData.length);
+      setTotalBook(bookData.length);
+    };
+    fetchData();
+  }, []);
   return (
     <div>
+      <div className="row my-24">
+        <div className="col-lg-3 col-sm-6 p-8">
+          <div className="rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24">
+            <div className=" py-12 text-center">
+              <div className="p-12 rounded-circle ">
+                <IoBookSharp className="fs-1 text-report-1-bold opacity-75" />
+              </div>
+              <h3 className="fs-2 text-report-1-bold fw-semibold my-12">
+                {totalBook * 110}
+              </h3>
+              <p className="mt-12 text-report-1-bold">Total books</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-3 col-sm-6 p-8">
+          <div className="rounded-4 bg-report-2 d-flex justify-content-center align-items-center py-24">
+            <div className=" py-12 text-center">
+              <div className="p-12 rounded-circle ">
+                <AiOutlineUser className="fs-1 text-report-2-bold opacity-75" />
+              </div>
+              <h3 className="fs-2 text-report-2-bold fw-semibold my-12">
+                {totalUser * 110}
+              </h3>
+              <p className="mt-12 text-report-2-bold">Total users</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-3 col-sm-6 p-8">
+          <div className="rounded-4 bg-report-3 d-flex justify-content-center align-items-center py-24">
+            <div className=" py-12 text-center">
+              <div className="p-12 rounded-circle ">
+                <BiTransferAlt className="fs-1 text-report-3-bold opacity-75" />
+              </div>
+              <h3 className="fs-2 text-report-3-bold fw-semibold my-12">
+                {borrow * 110}
+              </h3>
+              <p className="mt-12 text-report-3-bold">Total borrow - return</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-3 col-sm-6 p-8">
+          <div className="rounded-4 bg-report-4 d-flex justify-content-center align-items-center py-24">
+            <div className=" py-12 text-center">
+              <div className="p-12 rounded-circle ">
+                <BsDownload className="fs-1 text-report-4-bold opacity-75" />
+              </div>
+              <h3 className="fs-2 text-report-4-bold fw-semibold my-12">
+                750k
+              </h3>
+              <p className="mt-12 text-report-4-bold">Total download</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="row">
-        <div className="col-6 p-12">
+        <div className="col-sm-12 col-lg-6 p-12">
           <div className="row justify-content-center align-items-center g-2 bg-warning rounded-4 p-32">
             <div className="col-6">
-              <p className="mb-0">New update</p>
-              <p className="mb-0 fw-bold">The night ship</p>
+              <p className="mb-0 ">In coming book</p>
+              <p className="mb-0 fw-bold">Fairy Tale</p>
             </div>
             <div className="col-6">
               <img
-                src="https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&set=key%5Bresolve.format%5D,value%5Bwebp%5D&source=url%5Bhttps://prodimage.images-bn.com/pimages/9781668015179_p0_v5_s600x595.jpg%5D&scale=options%5Blimit%5D,size%5B300x10000%5D&sink=format%5Bwebp%5D"
+                src="https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/6680/9781668002179.jpg"
                 alt="new-book"
                 className="h-200"
               />
             </div>
           </div>
         </div>
-        <div className="col-6 p-12">
+        <div className="col-sm-12 col-lg-6 p-12">
           <div className="row justify-content-center align-items-center g-2 bg-new rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">The most borrowing book</p>
@@ -40,8 +123,8 @@ const Report = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col-6 p-12">
-          <div className="row justify-content-center align-items-center g-2 bg-borrowing rounded-4 p-32">
+        <div className="col-sm-12 col-lg-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-report-1 rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">The most active user: </p>
               <p className="mb-0 fw-bold">Lexine Kovacs</p>
@@ -55,8 +138,8 @@ const Report = () => {
             </div>
           </div>
         </div>
-        <div className="col-6 p-12">
-          <div className="row justify-content-center align-items-center g-2 bg-old rounded-4 p-32">
+        <div className="col-sm-12 col-lg-6 p-12">
+          <div className="row justify-content-center align-items-center g-2 bg-report-4 rounded-4 p-32">
             <div className="col-6">
               <p className="mb-0">Last borrowing:</p>
               <p className="mb-0 fw-bold">Sib Miell</p>

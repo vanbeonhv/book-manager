@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { loginCheck } from "../redux/actions/loginActions";
+import "./LoginPage.css";
 import Admin from "../users/Admin";
 
 const loginSchema = Yup.object().shape({
@@ -17,6 +18,7 @@ const loginSuccess = () =>
     autoClose: 1500,
     theme: "colored",
   });
+
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,63 +42,96 @@ const LoginPage = () => {
       navigate("dashboard");
     }
   }, [validUser]);
-
   return (
-    <div className="row position-relative vh-100 vw-100 overflow-hidden">
-      <div className="col-4 vh-100 overflow-hidden">
-        <div className="border border-primary rounded-3 position-absolute top-50 start-50 translate-middle p-24">
-          <Formik
-            initialValues={form}
-            enableReinitialize={true}
-            validationSchema={loginSchema}
-            onSubmit={() => {
-              login();
-            }}
-          >
-            <Form className="d-flex flex-wrap flex-column">
-              <label className="form-label text-capitalize" htmlFor="username">
-                username
-              </label>
-              <Field
-                name="username"
-                type="email"
-                value={form.username || ""}
-                onChange={handleChange}
-                className="mb-10 form-control"
+    <div className="">
+      <div className="vh-100 position-relative">
+        <div className="container py-5 h-100 position-absolute top-25 start-50 translate-middle">
+          <div className="row d-flex align-items-center justify-content-center h-100">
+            <div className="col-md-6 col-lg-7 col-xl-6">
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                className="img-fluid"
+                alt="Phone image"
               />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className="text-danger fs-6 fst-italic"
-              />
-              <label className="form-label text-capitalize" htmlFor="password">
-                password
-              </label>
-              <Field
-                name="password"
-                type="password"
-                value={form.password || ""}
-                onChange={handleChange}
-                className="mb-10 form-control"
-              />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className="text-danger fs-6 fst-italic"
-              />
-              <div className="text-center pt-24">
-                <button
-                  type="submit"
-                  className="btn btn-primary text-white loginBtn"
-                >
-                  Login
-                </button>
-              </div>
-            </Form>
-          </Formik>
+            </div>
+            <div className="col-md-6 col-lg-5 col-xl-5 offset-xl-1">
+              <Formik
+                initialValues={form}
+                enableReinitialize={true}
+                validationSchema={loginSchema}
+                onSubmit={() => {
+                  login();
+                }}
+              >
+                <Form>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="username">
+                      Email address
+                    </label>
+                    <Field
+                      name="username"
+                      type="email"
+                      value={form.username || ""}
+                      onChange={handleChange}
+                      className="mb-10 form-control form-control-lg"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-danger fs-6 fst-italic"
+                    />
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <label
+                      className="form-label text-capitalize"
+                      htmlFor="password"
+                    >
+                      password
+                    </label>
+                    <Field
+                      name="password"
+                      type="password"
+                      value={form.password || ""}
+                      onChange={handleChange}
+                      className="mb-10 form-control form-control-lg"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-danger fs-6 fst-italic"
+                    />
+                  </div>
+
+                  <div className="d-flex justify-content-around align-items-center mb-4">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="checkbox"
+                      />
+                      <label className="form-check-label" htmlFor="checkbox">
+                        Remember me
+                      </label>
+                    </div>
+                    <a href="#!">Forgot password?</a>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary text-white loginBtn btn-lg btn-block mt-12"
+                  >
+                    Login
+                  </button>
+
+                  <div className="divider d-flex align-items-center my-4"></div>
+                </Form>
+              </Formik>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="col-4"></div>
     </div>
   );
 };

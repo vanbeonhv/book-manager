@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { loginCheck } from "../redux/actions/loginActions";
 import "./LoginPage.css";
-import Admin from "../users/Admin";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required("Username required"),
@@ -126,6 +125,16 @@ const LoginPage = () => {
                   </button>
 
                   <div className="divider d-flex align-items-center my-4"></div>
+                  <div>
+                    <p>
+                      <span className="text-danger">Admin account: </span>
+                      admin@gmail.com - letmein
+                    </p>
+                    <p>
+                      <span className="text-danger">Manager account: </span>
+                      manager1@gmail.com - letmein
+                    </p>
+                  </div>
                 </Form>
               </Formik>
             </div>

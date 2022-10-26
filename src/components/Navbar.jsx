@@ -3,7 +3,6 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import avatar from "../data/avatar.jpg";
 import { logout } from "../redux/actions/loginActions";
 
 const Navbar = () => {

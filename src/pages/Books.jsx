@@ -20,14 +20,14 @@ const Books = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   let currentBooks = [];
   if (data) {
-    currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
+    currentBooks = data.slice(indexOfFirstItem, indexOfLastItem);
   }
   useEffect(() => {
     dispatch(loadBooks());
@@ -115,8 +115,8 @@ const Books = () => {
         </table>
         <div>
           <Pagination
-            booksPerPage={booksPerPage}
-            totalBooks={data.length}
+            itemsPerPage={itemsPerPage}
+            totalItems={data.length}
             paginate={paginate}
             currentPage={currentPage}
           />

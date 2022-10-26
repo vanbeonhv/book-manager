@@ -19,14 +19,14 @@ const BorrowingManager = () => {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   let currentBorrow = [];
   if (data) {
-    currentBorrow = data.slice(indexOfFirstBook, indexOfLastBook);
+    currentBorrow = data.slice(indexOfFirstItem, indexOfLastItem);
   }
   useEffect(() => {
     dispatch(loadBorrow());
@@ -131,8 +131,8 @@ const BorrowingManager = () => {
         </table>
         <div>
           <Pagination
-            booksPerPage={booksPerPage}
-            totalBooks={data.length}
+            itemsPerPage={itemsPerPage}
+            totalItems={data.length}
             paginate={paginate}
             currentPage={currentPage}
           />

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
-  // const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(totalBooks / booksPerPage);
+const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   const pageNumbers = [];
   const [activePage, setActivePage] = useState(1);
   let prevDisable = "";
@@ -25,7 +24,6 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
           <a
             onClick={() => {
               paginate(currentPage - 1);
-              console.log(currentPage - 1);
             }}
             className="page-link cursor-default user-select-none"
           >

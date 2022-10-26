@@ -4,7 +4,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BiTransferAlt } from "react-icons/bi";
 import { BsDownload } from "react-icons/bs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Report = () => {
+  const navigate = useNavigate();
   const [totalUser, setTotalUser] = useState([]);
   const [borrow, setBorrow] = useState([]);
   const [totalBook, setTotalBook] = useState("");
@@ -34,7 +36,10 @@ const Report = () => {
     <div>
       <div className="row my-24">
         <div className="col-lg-3 col-sm-6 p-8">
-          <div className="rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24">
+          <div
+            className="rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24"
+            onClick={() => navigate("../books")}
+          >
             <div className=" py-12 text-center">
               <div className="p-12 rounded-circle ">
                 <IoBookSharp className="fs-1 text-report-1-bold opacity-75" />
@@ -86,7 +91,17 @@ const Report = () => {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-24">
+        <div className="col-12 px-0">
+          <img
+            src="https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/content/Languages_1112x223_blank.jpg"
+            alt=""
+            className="w-100 rounded-3"
+          />
+        </div>
+      </div>
+
+      {/* <div className="row">
         <div className="col-sm-12 col-lg-6 p-12">
           <div className="row justify-content-center align-items-center g-2 bg-warning rounded-4 p-32">
             <div className="col-6">
@@ -108,7 +123,7 @@ const Report = () => {
               <p className="mb-0">The most borrowing book</p>
               <p className="mb-0 fw-bold">The night ship</p>
               <p className="mb-0 fst-italic">
-                Borrowed quantity:{" "}
+                Borrowed quantity:
                 <span className="fw-bold text-danger">40</span>
               </p>
             </div>
@@ -156,7 +171,7 @@ const Report = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

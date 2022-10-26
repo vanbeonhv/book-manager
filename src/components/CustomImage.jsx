@@ -3,7 +3,7 @@ import React from "react";
 const CustomImage = ({ className, src, alt, ...props }) => {
   const handleOnError = (e) => {
     e.target.src =
-      "https://img.freepik.com/premium-vector/clear-white-blank-book-cover_88272-1279.jpg?w=826";
+      "https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841";
   };
   return (
     <>
@@ -17,7 +17,7 @@ const CustomImage = ({ className, src, alt, ...props }) => {
       ) : (
         <img
           className={className}
-          src="https://img.freepik.com/premium-vector/clear-white-blank-book-cover_88272-1279.jpg?w=826"
+          src="https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841"
           alt={alt}
         />
       )}

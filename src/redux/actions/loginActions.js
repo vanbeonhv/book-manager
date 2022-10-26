@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../constants/loginConstants";
 
 export const loginCheck = (payload) => async (dispatch) => {
-  const url = "http://localhost:3001/api/login";
+  const url = "http://library-db-marc.herokuapp.com/api/login";
   const response = await axios.get(url);
   const { username, password } = payload;
   const userData = response.data;

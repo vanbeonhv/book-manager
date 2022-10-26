@@ -1,11 +1,10 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
 import * as Yup from "yup";
-import { editBooks, loadEditBooks } from "../redux/actions/bookActions";
 
 const booksSchema = Yup.object().shape({
   isbn: Yup.number().required("Required"),
@@ -32,7 +31,7 @@ const EditBooks = () => {
   useEffect(() => {
     const loadEditBooks = async (id) => {
       try {
-        const url = "http://localhost:3001/api/books/" + id;
+        const url = "https://library-db-marc.herokuapp.com/api/books/" + id;
         const response = await axios.get(url);
         setForm(response.data);
       } catch (error) {
@@ -54,7 +53,8 @@ const EditBooks = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={async () => {
-            const editUrl = "http://localhost:3001/api/books/" + id;
+            const editUrl =
+              "https://library-db-marc.herokuapp.com/api/books/" + id;
             await axios.put(editUrl, form);
             editSuccess();
           }}

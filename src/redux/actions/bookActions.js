@@ -7,7 +7,7 @@ import {
 
 export const loadBooks = () => async (dispatch) => {
   try {
-    const url = "http://localhost:3001/api/books";
+    const url = "http://library-db-marc.herokuapp.com/api/books";
     const response = await axios.get(url);
 
     dispatch({
@@ -21,7 +21,7 @@ export const loadBooks = () => async (dispatch) => {
 
 export const deleteBooks = (payloadId, payloadData) => async (dispatch) => {
   try {
-    const url = "http://localhost:3001/api/books/" + payloadId;
+    const url = "http://library-db-marc.herokuapp.com/api/books/" + payloadId;
     await axios.delete(url);
     dispatch({
       type: DELETE_BOOKS_SUCCESS,

@@ -12,9 +12,9 @@ const Report = () => {
   const [totalBook, setTotalBook] = useState("");
   useEffect(() => {
     const fetchData = async () => {
-      const userURL = "http://localhost:3001/api/students";
-      const borrowURL = "http://localhost:3001/api/borrow";
-      const bookURL = "http://localhost:3001/api/books";
+      const userURL = "http://library-db-marc.herokuapp.com/api/students";
+      const borrowURL = "http://library-db-marc.herokuapp.com/api/borrow";
+      const bookURL = "http://library-db-marc.herokuapp.com/api/books";
 
       const responses = await Promise.all([
         axios.get(userURL),

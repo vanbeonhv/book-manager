@@ -57,7 +57,8 @@ const AddStudents = () => {
           validationSchema={booksSchema}
           onSubmit={async () => {
             try {
-              const addUrl = "http://localhost:3001/api/students/";
+              const addUrl =
+                "https://library-db-marc.herokuapp.com/api/students/";
               await axios.post(addUrl, form);
               console.log(form);
               addSuccess();

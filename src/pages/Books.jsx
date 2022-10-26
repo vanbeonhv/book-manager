@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteBooks, loadBooks } from "../redux/actions/bookActions";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +58,7 @@ const Books = () => {
           Add
         </button>
       </div>
-      <div className="table-responsive rounded-3">
+      <div className="table-responsive">
         <table className="table table-white table-sm table-hover table-stripped table-bordered p-4  ">
           <thead className="table-primary align-middle text-center ">
             <tr>

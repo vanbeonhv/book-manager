@@ -17,56 +17,14 @@ const Navbar = () => {
     console.log("test");
   }
   return (
-    // <div className="position-fixed top-0">
     <div className="d-flex justify-content-between py-8 px-2">
       <div className="">
         <button className="btn text-primary fs-6 ">
           <AiOutlineMenu />
         </button>
       </div>
-      <div className="dropdown">
-        <button className="me-12 dropdown-toggle">
-          <img
-            src={loginInfo[0].img || loginTemp[0].img}
-            alt="avatar"
-            className="rounded-circle h-32 w-32"
-          />
-          <p className="mb-0">
-            Hi,{" "}
-            <span className="fw-semibold">
-              {loginInfo[0].name || loginTemp[0].name}
-            </span>
-          </p>
-        </button>
-      </div>
 
-      <ul className="dropdown-menu">
-        <li>
-          <a className="fst-italic fs-7 dropdown-item">
-            You logged as:
-            <span className="fw-semibold fst-normal fs-6 ms-4 text-capitalize text-primary">
-              {loginInfo[0].role || loginTemp[0].role}
-            </span>
-          </a>
-        </li>
-        <hr />
-        <li>
-          <div className="text-end mt-8 dropdown-item">
-            <button
-              type="button"
-              className="btn btn-outline-danger logout"
-              onClick={() => {
-                dispatch(logout());
-                navigate("../../");
-                localStorage.removeItem("loginTemp");
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        </li>
-      </ul>
-      {/* <div className="d-flex align-items-center gap-5 me-12 position-relative ">
+      <div className="d-flex align-items-center gap-5 me-12 position-relative ">
         <img
           src={loginInfo[0].img || loginTemp[0].img}
           alt="avatar"
@@ -79,7 +37,7 @@ const Navbar = () => {
           </span>
         </p>
         <button
-          className="p-4 cursor-pointer dropdown-toggle"
+          className="p-4 cursor-pointer btn"
           onClick={() => {
             display === "d-block"
               ? setDisplay("d-none")
@@ -112,9 +70,8 @@ const Navbar = () => {
             Logout
           </button>
         </div>
-      </div> */}
+      </div>
     </div>
-    // </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomImage = ({ className, src, alt, ...props }) => {
+const CustomImage = ({ className, src, alt }) => {
   const handleOnError = (e) => {
     e.target.src =
       "https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841";

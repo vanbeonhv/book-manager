@@ -31,7 +31,7 @@ const EditStudents = () => {
   useEffect(() => {
     const loadEditStudent = async (id) => {
       try {
-        const url = "http://localhost:3001/api/students/" + id;
+        const url = "https://library-db-marc.herokuapp.com/api/students/" + id;
         const response = await axios.get(url);
         setForm(response.data);
       } catch (error) {
@@ -53,7 +53,8 @@ const EditStudents = () => {
           enableReinitialize={true}
           validationSchema={booksSchema}
           onSubmit={async () => {
-            const editUrl = "http://localhost:3001/api/students/" + id;
+            const editUrl =
+              "https://library-db-marc.herokuapp.com/api/students/" + id;
             await axios.put(editUrl, form);
             editSuccess();
           }}

@@ -37,9 +37,10 @@ const AddBorrow = () => {
   const [books, setBooks] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const userURL = "http://localhost:3001/api/students";
-      const universityURL = "http://localhost:3001/api/university";
-      const bookURL = "http://localhost:3001/api/books";
+      const userURL = "http://library-db-marc.herokuapp.com/api/students";
+      const universityURL =
+        "http://library-db-marc.herokuapp.com/api/university";
+      const bookURL = "http://library-db-marc.herokuapp.com/api/books";
 
       const responses = await Promise.all([
         axios.get(userURL),
@@ -89,7 +90,7 @@ const AddBorrow = () => {
           validationSchema={booksSchema}
           onSubmit={async () => {
             try {
-              const addUrl = "http://localhost:3001/api/borrow";
+              const addUrl = "https://library-db-marc.herokuapp.com/api/borrow";
               await axios.post(addUrl, form);
               addSuccess();
               setForm({

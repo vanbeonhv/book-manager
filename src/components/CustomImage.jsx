@@ -3,7 +3,7 @@ import React from "react";
 const CustomImage = ({ className, src, alt, ...props }) => {
   const handleOnError = (e) => {
     e.target.src =
-      "https://i.pinimg.com/originals/5f/60/36/5f6036ea0bccb9c6ac28ab6d7844297d.jpg";
+      "https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841";
   };
   return (
     <>
@@ -17,7 +17,7 @@ const CustomImage = ({ className, src, alt, ...props }) => {
       ) : (
         <img
           className={className}
-          src="https://i.pinimg.com/originals/5f/60/36/5f6036ea0bccb9c6ac28ab6d7844297d.jpg"
+          src="https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841"
           alt={alt}
         />
       )}

@@ -42,7 +42,7 @@ const ReturnBorrow = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios
-        .get("http://library-db-marc.herokuapp.com/api/borrow/" + id)
+        .get("https://library-db-marc.herokuapp.com/api/borrow/" + id)
         .catch((err) => {
           throw err;
         });
@@ -63,7 +63,8 @@ const ReturnBorrow = () => {
 
   const handleSubmit = async () => {
     try {
-      const returnUrl = "http://library-db-marc.herokuapp.com/api/borrow/" + id;
+      const returnUrl =
+        "https://library-db-marc.herokuapp.com/api/borrow/" + id;
       await axios.put(returnUrl, form);
       returnSuccess();
     } catch (error) {

@@ -20,12 +20,54 @@ const Navbar = () => {
   return (
     // <div className="position-fixed top-0">
     <div className="d-flex justify-content-between py-8 px-2">
-      <div>
-        <button className="btn text-primary fs-6">
+      <div className="">
+        <button className="btn text-primary fs-6 ">
           <AiOutlineMenu />
         </button>
       </div>
-      <div className="d-flex align-items-center gap-5 me-12 position-relative">
+      <div className="dropdown">
+        <button className="me-12 dropdown-toggle">
+          <img
+            src={loginInfo[0].img || loginTemp[0].img}
+            alt="avatar"
+            className="rounded-circle h-32 w-32"
+          />
+          <p className="mb-0">
+            Hi,{" "}
+            <span className="fw-semibold">
+              {loginInfo[0].name || loginTemp[0].name}
+            </span>
+          </p>
+        </button>
+      </div>
+
+      <ul className="dropdown-menu">
+        <li>
+          <a className="fst-italic fs-7 dropdown-item">
+            You logged as:
+            <span className="fw-semibold fst-normal fs-6 ms-4 text-capitalize text-primary">
+              {loginInfo[0].role || loginTemp[0].role}
+            </span>
+          </a>
+        </li>
+        <hr />
+        <li>
+          <div className="text-end mt-8 dropdown-item">
+            <button
+              type="button"
+              className="btn btn-outline-danger logout"
+              onClick={() => {
+                dispatch(logout());
+                navigate("../../");
+                localStorage.removeItem("loginTemp");
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        </li>
+      </ul>
+      {/* <div className="d-flex align-items-center gap-5 me-12 position-relative ">
         <img
           src={loginInfo[0].img || loginTemp[0].img}
           alt="avatar"
@@ -37,8 +79,8 @@ const Navbar = () => {
             {loginInfo[0].name || loginTemp[0].name}
           </span>
         </p>
-        <div
-          className="p-4 cursor-pointer"
+        <button
+          className="p-4 cursor-pointer dropdown-toggle"
           onClick={() => {
             display === "d-block"
               ? setDisplay("d-none")
@@ -46,7 +88,7 @@ const Navbar = () => {
           }}
         >
           <MdKeyboardArrowDown />
-        </div>
+        </button>
       </div>
       <div
         className={`position-absolute top-100 end-0 me-12 w- bg-light border border-primary shadow rounded-3 py-10 px-4 ${display}`}
@@ -71,7 +113,7 @@ const Navbar = () => {
             Logout
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
     // </div>
   );

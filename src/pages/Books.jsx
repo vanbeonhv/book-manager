@@ -59,7 +59,7 @@ const Books = () => {
           Add
         </button>
       </div>
-      <div className="table-responsive rounded-3">
+      <div className="table-responsive">
         <table className="table table-white table-sm table-hover table-stripped table-bordered p-4  ">
           <thead className="table-primary align-middle text-center ">
             <tr>

@@ -1,4 +1,3 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./Layout.css";
 import "typeface-roboto";
 import Navbar from "../components/Navbar";

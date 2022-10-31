@@ -24,51 +24,43 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="d-flex align-items-center gap-5 me-12 position-relative ">
+      <div className="d-flex align-items-center gap-5 me-12 position-relative user-info">
         <img
           src={loginInfo[0].img || loginTemp[0].img}
           alt="avatar"
           className="rounded-circle h-32 w-32"
         />
-        <p className="mb-0">
+        <p className="mb-0 cursor-default">
           Hi,{" "}
           <span className="fw-semibold">
             {loginInfo[0].name || loginTemp[0].name}
           </span>
+          <MdKeyboardArrowDown className="ms-4" />
         </p>
-        <button
-          className="p-4 cursor-pointer btn"
-          onClick={() => {
-            display === "d-block"
-              ? setDisplay("d-none")
-              : setDisplay("d-block");
-          }}
+        <div
+          className={`position-absolute top-100 end-0  w- bg-light border border-primary shadow rounded-3 py-10 px-4  user-profile w-100`}
         >
-          <MdKeyboardArrowDown />
-        </button>
-      </div>
-      <div
-        className={`position-absolute top-100 end-0 me-12 w- bg-light border border-primary shadow rounded-3 py-10 px-4 ${display}`}
-      >
-        <p className="fst-italic fs-7">
-          You logged as:
-          <span className="fw-semibold fst-normal fs-6 ms-4 text-capitalize text-primary">
-            {loginInfo[0].role || loginTemp[0].role}
-          </span>
-        </p>
-        <hr />
-        <div className="text-end mt-8">
-          <button
-            type="button"
-            className="btn btn-outline-danger logout"
-            onClick={() => {
-              dispatch(logout());
-              navigate("../../");
-              localStorage.removeItem("loginTemp");
-            }}
-          >
-            Logout
-          </button>
+          <p className="fst-italic fs-7">
+            You logged as:
+            <br />
+            <span className="fw-semibold fst-normal fs-6 ms-4 text-capitalize text-primary">
+              {loginInfo[0].role || loginTemp[0].role}
+            </span>
+          </p>
+          <hr />
+          <div className="text-end mt-8">
+            <button
+              type="button"
+              className="btn btn-outline-danger logout"
+              onClick={() => {
+                dispatch(logout());
+                navigate("../../");
+                localStorage.removeItem("loginTemp");
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>

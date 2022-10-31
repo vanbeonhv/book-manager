@@ -58,6 +58,12 @@
   margin: 0 40px;
 }
 
+.user-info:hover .user-profile {
+  display: block;
+}
+.user-profile {
+  display: none;
+}
 @media (max-width: 1080px) {
   .main-content-responsive {
     padding-top: 12px;

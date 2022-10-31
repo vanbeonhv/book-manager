@@ -16,13 +16,13 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-
   return (
     <nav className="">
       <ul className="pagination justify-content-end">
         <li className={`page-item ${prevDisable}`}>
           <a
             onClick={() => {
+              setActivePage(currentPage - 1);
               paginate(currentPage - 1);
             }}
             className="page-link cursor-default user-select-none"
@@ -49,6 +49,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
         <li className={`page-item ${nextDisable}`}>
           <a
             onClick={() => {
+              setActivePage(currentPage + 1);
               paginate(currentPage + 1);
             }}
             className="page-link cursor-default user-select-none"

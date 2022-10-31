@@ -3,7 +3,7 @@ import React from "react";
 const CustomImage = ({ className, src, alt }) => {
   const handleOnError = (e) => {
     e.target.src =
-      "https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841";
+      "https://i.pinimg.com/564x/fa/45/38/fa45385bff6d9feab48f73a65e164ccf--wooden-books-blank-book.jpg";
   };
   return (
     <>
@@ -17,7 +17,7 @@ const CustomImage = ({ className, src, alt }) => {
       ) : (
         <img
           className={className}
-          src="https://static.wikia.nocookie.net/souo/images/4/47/Old_Book.jpg/revision/latest/scale-to-width-down/220?cb=20181030100841"
+          src="https://i.pinimg.com/564x/fa/45/38/fa45385bff6d9feab48f73a65e164ccf--wooden-books-blank-book.jpg"
           alt={alt}
         />
       )}

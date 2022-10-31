@@ -5,6 +5,7 @@ import { BiTransferAlt } from "react-icons/bi";
 import { BsDownload } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Report.css";
 const Report = () => {
   const navigate = useNavigate();
   const [totalUser, setTotalUser] = useState([]);
@@ -37,7 +38,7 @@ const Report = () => {
       <div className="row my-24">
         <div className="col-lg-3 col-sm-6 p-8">
           <div
-            className="rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24 cursor-pointer"
+            className="report-card rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24 cursor-pointer"
             onClick={() => navigate("../books")}
           >
             <div className=" py-12 text-center">
@@ -53,7 +54,7 @@ const Report = () => {
         </div>
         <div className="col-lg-3 col-sm-6 p-8">
           <div
-            className="rounded-4 bg-report-2 d-flex justify-content-center align-items-center py-24 cursor-pointer"
+            className="report-card rounded-4 bg-report-2 d-flex justify-content-center align-items-center py-24 cursor-pointer"
             onClick={() => navigate("../students-manager")}
           >
             <div className=" py-12 text-center">
@@ -69,7 +70,7 @@ const Report = () => {
         </div>
         <div className="col-lg-3 col-sm-6 p-8">
           <div
-            className="rounded-4 bg-report-3 d-flex justify-content-center align-items-center py-24 cursor-pointer"
+            className="report-card rounded-4 bg-report-3 d-flex justify-content-center align-items-center py-24 cursor-pointer"
             onClick={() => navigate("../borrowing-manager")}
           >
             <div className=" py-12 text-center">
@@ -84,7 +85,7 @@ const Report = () => {
           </div>
         </div>
         <div className="col-lg-3 col-sm-6 p-8">
-          <div className="rounded-4 bg-report-4 d-flex justify-content-center align-items-center py-24">
+          <div className="report-card rounded-4 bg-report-4 d-flex justify-content-center align-items-center py-24">
             <div className=" py-12 text-center">
               <div className="p-12 rounded-circle ">
                 <BsDownload className="fs-1 text-report-4-bold opacity-75" />

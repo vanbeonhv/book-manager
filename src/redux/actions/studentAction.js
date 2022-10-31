@@ -2,7 +2,7 @@ import axios from "axios";
 import { DELETE_STUDENTS, FETCH_STUDENTS } from "../constants/studentConstants";
 
 export const loadStudents = () => async (dispatch) => {
-  const url = "http://library-db-marc.herokuapp.com/api/students";
+  const url = "https://library-db-marc.herokuapp.com/api/students";
   const response = await axios.get(url);
   dispatch({
     type: FETCH_STUDENTS,
@@ -13,7 +13,7 @@ export const loadStudents = () => async (dispatch) => {
 export const deleteStudents = (payloadId, payloadData) => async (dispatch) => {
   try {
     const url =
-      "http://library-db-marc.herokuapp.com/api/students/" + payloadId;
+      "https://library-db-marc.herokuapp.com/api/students/" + payloadId;
     await axios.delete(url);
     dispatch({
       type: DELETE_STUDENTS,

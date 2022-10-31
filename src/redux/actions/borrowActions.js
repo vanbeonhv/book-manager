@@ -3,7 +3,7 @@ import { FETCH_USER, DELETE_USER } from "../constants/borrowConstants";
 
 export const loadBorrow = () => async (dispatch) => {
   try {
-    const url = "http://library-db-marc.herokuapp.com/api/borrow";
+    const url = "https://library-db-marc.herokuapp.com/api/borrow";
     const response = await axios.get(url);
 
     dispatch({ type: FETCH_USER, payload: response.data });
@@ -14,7 +14,7 @@ export const loadBorrow = () => async (dispatch) => {
 
 export const deleteBorrow = (payloadId, payloadData) => async (dispatch) => {
   try {
-    const url = "http://library-db-marc.herokuapp.com/api/borrow/" + payloadId;
+    const url = "https://library-db-marc.herokuapp.com/api/borrow/" + payloadId;
     await axios.delete(url);
     dispatch({
       type: DELETE_USER,

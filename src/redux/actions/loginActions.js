@@ -1,9 +1,9 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../constants/loginConstants";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from '../constants/loginConstants';
 
 export const loginCheck = (payload) => async (dispatch) => {
-  const url = "https://library-db-marc.herokuapp.com/api/login";
+  const url = 'https://book-database-z5rg.onrender.com/api/login';
   const response = await axios.get(url);
   const { username, password } = payload;
   const userData = response.data;
@@ -18,18 +18,18 @@ export const loginCheck = (payload) => async (dispatch) => {
     // const userInfoFormatted = Object.keys(userInfo);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: userInfo,
+      payload: userInfo
     });
   }
   if (userInfo.length === 0) {
     dispatch({
-      type: LOGIN_FAIL,
+      type: LOGIN_FAIL
     });
     const loginFail = () =>
-      toast.error("Invalid username or password!", {
+      toast.error('Invalid username or password!', {
         position: toast.POSITION.TOP_LEFT,
         autoClose: 1000,
-        theme: "colored",
+        theme: 'colored'
       });
     loginFail();
   }
@@ -37,6 +37,6 @@ export const loginCheck = (payload) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({
-    type: LOGOUT,
+    type: LOGOUT
   });
 };

@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { IoBookSharp } from "react-icons/io5";
-import { AiOutlineUser } from "react-icons/ai";
-import { BiTransferAlt } from "react-icons/bi";
-import { BsDownload } from "react-icons/bs";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./Report.css";
+import React, { useEffect, useState } from 'react';
+import { IoBookSharp } from 'react-icons/io5';
+import { AiOutlineUser } from 'react-icons/ai';
+import { BiTransferAlt } from 'react-icons/bi';
+import { BsDownload } from 'react-icons/bs';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './Report.css';
+import BACKEND_LINK from '../constant';
 const Report = () => {
   const navigate = useNavigate();
   const [totalUser, setTotalUser] = useState([]);
   const [borrow, setBorrow] = useState([]);
-  const [totalBook, setTotalBook] = useState("");
+  const [totalBook, setTotalBook] = useState('');
   useEffect(() => {
     const fetchData = async () => {
-      const userURL = "https://library-db-marc.herokuapp.com/api/students";
-      const borrowURL = "https://library-db-marc.herokuapp.com/api/borrow";
-      const bookURL = "https://library-db-marc.herokuapp.com/api/books";
+      const userURL = `${BACKEND_LINK}/api/students`;
+      const borrowURL = `${BACKEND_LINK}/api/borrow`;
+      const bookURL = `${BACKEND_LINK}/api/books`;
 
       const responses = await Promise.all([
         axios.get(userURL),
         axios.get(borrowURL),
-        axios.get(bookURL),
+        axios.get(bookURL)
       ]).catch((err) => {
         throw err;
       });
@@ -35,75 +36,75 @@ const Report = () => {
   }, []);
   return (
     <div>
-      <div className="row my-24">
-        <div className="col-lg-3 col-sm-6 p-8">
+      <div className='row my-24'>
+        <div className='col-lg-3 col-sm-6 p-8'>
           <div
-            className="report-card rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24 cursor-pointer"
-            onClick={() => navigate("../books")}
+            className='report-card rounded-4 bg-report-1 d-flex justify-content-center align-items-center py-24 cursor-pointer'
+            onClick={() => navigate('../books')}
           >
-            <div className=" py-12 text-center">
-              <div className="p-12 rounded-circle ">
-                <IoBookSharp className="fs-1 text-report-1-bold opacity-75" />
+            <div className=' py-12 text-center'>
+              <div className='p-12 rounded-circle '>
+                <IoBookSharp className='fs-1 text-report-1-bold opacity-75' />
               </div>
-              <h3 className="fs-2 text-report-1-bold fw-semibold my-12">
+              <h3 className='fs-2 text-report-1-bold fw-semibold my-12'>
                 {totalBook * 110}
               </h3>
-              <p className="mt-12 text-report-1-bold">Total books</p>
+              <p className='mt-12 text-report-1-bold'>Total books</p>
             </div>
           </div>
         </div>
-        <div className="col-lg-3 col-sm-6 p-8">
+        <div className='col-lg-3 col-sm-6 p-8'>
           <div
-            className="report-card rounded-4 bg-report-2 d-flex justify-content-center align-items-center py-24 cursor-pointer"
-            onClick={() => navigate("../students-manager")}
+            className='report-card rounded-4 bg-report-2 d-flex justify-content-center align-items-center py-24 cursor-pointer'
+            onClick={() => navigate('../students-manager')}
           >
-            <div className=" py-12 text-center">
-              <div className="p-12 rounded-circle ">
-                <AiOutlineUser className="fs-1 text-report-2-bold opacity-75" />
+            <div className=' py-12 text-center'>
+              <div className='p-12 rounded-circle '>
+                <AiOutlineUser className='fs-1 text-report-2-bold opacity-75' />
               </div>
-              <h3 className="fs-2 text-report-2-bold fw-semibold my-12">
+              <h3 className='fs-2 text-report-2-bold fw-semibold my-12'>
                 {totalUser * 110}
               </h3>
-              <p className="mt-12 text-report-2-bold">Total users</p>
+              <p className='mt-12 text-report-2-bold'>Total users</p>
             </div>
           </div>
         </div>
-        <div className="col-lg-3 col-sm-6 p-8">
+        <div className='col-lg-3 col-sm-6 p-8'>
           <div
-            className="report-card rounded-4 bg-report-3 d-flex justify-content-center align-items-center py-24 cursor-pointer"
-            onClick={() => navigate("../borrowing-manager")}
+            className='report-card rounded-4 bg-report-3 d-flex justify-content-center align-items-center py-24 cursor-pointer'
+            onClick={() => navigate('../borrowing-manager')}
           >
-            <div className=" py-12 text-center">
-              <div className="p-12 rounded-circle ">
-                <BiTransferAlt className="fs-1 text-report-3-bold opacity-75" />
+            <div className=' py-12 text-center'>
+              <div className='p-12 rounded-circle '>
+                <BiTransferAlt className='fs-1 text-report-3-bold opacity-75' />
               </div>
-              <h3 className="fs-2 text-report-3-bold fw-semibold my-12">
+              <h3 className='fs-2 text-report-3-bold fw-semibold my-12'>
                 {borrow * 110}
               </h3>
-              <p className="mt-12 text-report-3-bold">Total borrow - return</p>
+              <p className='mt-12 text-report-3-bold'>Total borrow - return</p>
             </div>
           </div>
         </div>
-        <div className="col-lg-3 col-sm-6 p-8">
-          <div className="report-card rounded-4 bg-report-4 d-flex justify-content-center align-items-center py-24">
-            <div className=" py-12 text-center">
-              <div className="p-12 rounded-circle ">
-                <BsDownload className="fs-1 text-report-4-bold opacity-75" />
+        <div className='col-lg-3 col-sm-6 p-8'>
+          <div className='report-card rounded-4 bg-report-4 d-flex justify-content-center align-items-center py-24'>
+            <div className=' py-12 text-center'>
+              <div className='p-12 rounded-circle '>
+                <BsDownload className='fs-1 text-report-4-bold opacity-75' />
               </div>
-              <h3 className="fs-2 text-report-4-bold fw-semibold my-12">
+              <h3 className='fs-2 text-report-4-bold fw-semibold my-12'>
                 750k
               </h3>
-              <p className="mt-12 text-report-4-bold">Total download</p>
+              <p className='mt-12 text-report-4-bold'>Total download</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="row mt-24">
-        <div className="col-12 px-0">
+      <div className='row mt-24'>
+        <div className='col-12 px-0'>
           <img
-            src="https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/content/Languages_1112x223_blank.jpg"
-            alt=""
-            className="w-100 rounded-3"
+            src='https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/content/Languages_1112x223_blank.jpg'
+            alt=''
+            className='w-100 rounded-3'
           />
         </div>
       </div>
